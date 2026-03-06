@@ -1,0 +1,167 @@
+@import "tailwindcss";
+
+/* ============================================
+   THEME SYSTEM — semantic colors that swap light/dark
+   ============================================ */
+
+:root {
+  /* Light theme (default) */
+  --th-base: #f7fafc;
+  --th-panel: #ffffff;
+  --th-raised: #f7fafc;
+  --th-hover: #edf2f7;
+  --th-active: #e2e8f0;
+  --th-edge: #e2e8f0;
+  --th-input: #ffffff;
+  --th-heading: #1a202c;
+  --th-body: #2d3748;
+  --th-muted: #718096;
+  --th-faint: #a0aec0;
+}
+
+[data-theme="dark"] {
+  --th-base: #1a202c;
+  --th-panel: #2d3748;
+  --th-raised: #3d4a5c;
+  --th-hover: #3d4a5c;
+  --th-active: #4a5568;
+  --th-edge: #4a5568;
+  --th-input: #3d4a5c;
+  --th-heading: #f7fafc;
+  --th-body: #e2e8f0;
+  --th-muted: #a0aec0;
+  --th-faint: #5a6a7a;
+}
+
+@theme {
+  /* Semantic surface colors */
+  --color-base: var(--th-base);
+  --color-panel: var(--th-panel);
+  --color-raised: var(--th-raised);
+  --color-hover: var(--th-hover);
+  --color-active: var(--th-active);
+  --color-edge: var(--th-edge);
+  --color-input: var(--th-input);
+
+  /* Semantic text colors */
+  --color-heading: var(--th-heading);
+  --color-body: var(--th-body);
+  --color-muted: var(--th-muted);
+  --color-faint: var(--th-faint);
+
+  /* Brand colors — static, don't change with theme */
+  --color-aero-blue: #3182ce;
+  --color-aero-blue-light: #4299e1;
+  --color-aero-blue-dark: #2b6cb0;
+  --color-aero-orange: #ed8936;
+  --color-aero-orange-light: #f6ad55;
+  --color-aero-orange-dark: #dd6b20;
+
+  /* Dark palette — always available for sidebar/chrome (matches main platform) */
+  --color-aero-dark-900: #1a202c;
+  --color-aero-dark-800: #2d3748;
+  --color-aero-dark-700: #3d4a5c;
+  --color-aero-dark-600: #4a5568;
+  --color-aero-dark-500: #5a6a7a;
+  --color-aero-dark-400: #718096;
+  --color-aero-text-light: #f7fafc;
+  --color-aero-text-muted: #e2e8f0;
+  --color-aero-text-subtle: #a0aec0;
+
+  /* Semantic status */
+  --color-success: #48bb78;
+  --color-warning: #ed8936;
+  --color-danger: #e53e3e;
+}
+
+html {
+  color-scheme: light;
+}
+
+[data-theme="dark"] {
+  color-scheme: dark;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  background-color: var(--th-base);
+  color: var(--th-body);
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-size: 15px;
+  line-height: 1.6;
+  letter-spacing: -0.01em;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Loading logo animations */
+@keyframes draw-stroke-loop {
+  0% { stroke-dashoffset: var(--dash-length); opacity: 0.3; }
+  15% { opacity: 1; }
+  50% { stroke-dashoffset: 0; opacity: 1; }
+  70% { stroke-dashoffset: 0; opacity: 0.3; }
+  100% { stroke-dashoffset: var(--dash-length); opacity: 0.3; }
+}
+
+@keyframes logo-pulse {
+  0%, 100% { opacity: 0.4; transform: scale(0.92); }
+  50% { opacity: 1; transform: scale(1); }
+}
+
+.animate-draw-blue {
+  --dash-length: 120;
+  stroke-dasharray: 120;
+  stroke-dashoffset: 120;
+  animation: draw-stroke-loop 2s ease-in-out infinite;
+}
+
+.animate-draw-orange {
+  --dash-length: 180;
+  stroke-dasharray: 180;
+  stroke-dashoffset: 180;
+  animation: draw-stroke-loop 2s ease-in-out 0.2s infinite;
+}
+
+.animate-draw-jet {
+  --dash-length: 30;
+  stroke-dasharray: 30;
+  stroke-dashoffset: 30;
+  animation: draw-stroke-loop 2s ease-in-out 0.4s infinite;
+}
+
+.animate-draw-jet2 {
+  --dash-length: 25;
+  stroke-dasharray: 25;
+  stroke-dashoffset: 25;
+  animation: draw-stroke-loop 2s ease-in-out 0.5s infinite;
+}
+
+.animate-logo-reveal {
+  animation: logo-pulse 2s ease-in-out infinite;
+}
+
+/* Animations */
+@keyframes fadeInUp { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+.animate-fade-in-up { animation: fadeInUp 0.3s ease-out both; }
+.animate-fade-in { animation: fadeIn 0.25s ease-out both; }
+
+.btn-press { transition: transform 0.1s; }
+.btn-press:active { transform: scale(0.97); }
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--th-edge); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--th-muted); }
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
