@@ -159,7 +159,7 @@ export function SettingsView() {
           <h2 className="text-sm font-semibold text-heading mb-3">About</h2>
           <div className="bg-panel rounded-xl border border-edge p-4">
             <div className="flex items-center gap-3 mb-3">
-              <img src="/dashtwo-icon.png" alt="DashTwo" className="w-8 h-8 object-contain" />
+              <img src="/dashtwo-icon.png" alt="DashTwo" className="w-10 h-10 object-contain" />
               <div>
                 <div className="text-sm font-semibold text-heading">DashTwo</div>
                 <div className="text-xs text-muted">AI Aviation Wingman</div>

@@ -47,7 +47,7 @@ export function SiteLayout() {
               </svg>
             </button>
             <div className="flex items-center gap-2">
-              <img src="/dashtwo-icon.png" alt="DashTwo" className="h-5 w-5 object-contain" />
+              <img src="/dashtwo-icon.png" alt="DashTwo" className="h-7 w-7 object-contain" />
               <span className="text-white font-semibold text-sm">DashTwo</span>
             </div>
           </div>

@@ -43,7 +43,7 @@ export function MessageBubble({ message, isStreaming, streamingContent }: Messag
       <div className="group">
         {/* Avatar + name row */}
         <div className="flex items-center gap-2.5 mb-2">
-          <img src="/dashtwo-icon.png" alt="DashTwo" className="w-6 h-6 object-contain" />
+          <img src="/dashtwo-icon.png" alt="DashTwo" className="w-7 h-7 object-contain" />
           <span className="text-sm font-medium text-heading">DashTwo</span>
           {message.model && (
             <span className="text-[11px] text-faint">

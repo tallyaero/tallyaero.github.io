@@ -8,7 +8,7 @@ export function WelcomeScreen() {
   return (
     <div className="flex flex-col items-center justify-center h-full px-6 py-16">
       <div className="text-center mb-12">
-        <img src="/dashtwo-icon.png" alt="DashTwo" className="h-14 w-14 mx-auto mb-4 object-contain" />
+        <img src="/dashtwo-icon.png" alt="DashTwo" className="h-20 w-20 mx-auto mb-4 object-contain" />
         <h1 className="text-2xl font-semibold text-heading mb-3">
           How can I help with your flying?
         </h1>
