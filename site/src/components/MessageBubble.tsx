@@ -52,6 +52,10 @@ const LoadingIndicator = memo(function LoadingIndicator() {
   );
 });
 
+function formatTime(ts: number): string {
+  return new Date(ts).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
+}
+
 interface MessageBubbleProps {
   message: ChatMessage;
   isStreaming?: boolean;
@@ -118,7 +122,7 @@ export function MessageBubble({ message, isStreaming }: MessageBubbleProps) {
       <div className="group flex justify-end">
         <div className="max-w-[75%]">
           {isEditing ? (
-            <div className="bg-raised rounded-2xl rounded-br-md px-5 py-3">
+            <div className="bg-user-bubble rounded-2xl rounded-br-md px-5 py-3">
               <textarea
                 ref={editTextareaRef}
                 value={editContent}
@@ -144,12 +148,13 @@ export function MessageBubble({ message, isStreaming }: MessageBubbleProps) {
             </div>
           ) : (
             <>
-              <div className="bg-raised rounded-2xl rounded-br-md px-5 py-3">
+              <div className="bg-user-bubble rounded-2xl rounded-br-md px-5 py-3">
                 <p className="text-[15px] text-heading leading-relaxed whitespace-pre-wrap">{content}</p>
               </div>
-              {/* Edit button — appears on hover */}
-              {!chatIsStreaming && (
-                <div className="flex justify-end mt-1 opacity-0 group-hover:opacity-100 transition-opacity">
+              {/* Time + edit — appears on hover, same line */}
+              <div className="flex items-center justify-end gap-2 mt-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                <span className="text-[11px] text-faint">{formatTime(message.timestamp)}</span>
+                {!chatIsStreaming && (
                   <button
                     onClick={handleEdit}
                     className="p-1 rounded-lg text-faint hover:text-body hover:bg-hover transition-colors"
@@ -159,8 +164,8 @@ export function MessageBubble({ message, isStreaming }: MessageBubbleProps) {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                     </svg>
                   </button>
-                </div>
-              )}
+                )}
+              </div>
             </>
           )}
         </div>
@@ -177,11 +182,6 @@ export function MessageBubble({ message, isStreaming }: MessageBubbleProps) {
           <div className="flex items-center gap-2.5 mb-2">
             <img src="/dashtwo-icon.png" alt="DashTwo" className="w-7 h-7 object-contain" />
             <span className="text-sm font-medium text-heading">DashTwo</span>
-            {message.model && (
-              <span className="text-[11px] text-faint">
-                {message.model.includes('haiku') ? 'Haiku' : message.model.includes('sonnet') ? 'Sonnet' : ''}
-              </span>
-            )}
           </div>
         )}
 
@@ -225,6 +225,7 @@ export function MessageBubble({ message, isStreaming }: MessageBubbleProps) {
         {/* Action buttons — appears on hover like Claude */}
         {!isStreaming && content && (
           <div className="pl-[34px] mt-2 flex items-center gap-0.5 opacity-0 group-hover:opacity-100 transition-opacity">
+            <span className="text-[11px] text-faint mr-1.5">{formatTime(message.timestamp)}</span>
             {/* Thumbs up */}
             <button
               onClick={() => setFeedback(message.id, 'up')}
@@ -337,7 +338,7 @@ export function MessageBubble({ message, isStreaming }: MessageBubbleProps) {
                 setShowFeedbackInput(false);
                 setFeedbackText('');
               }}
-              className="self-end px-4 py-2 text-sm bg-raised hover:bg-active text-body rounded-xl transition-colors"
+              className="self-end px-4 py-2 text-sm bg-user-bubble hover:bg-active text-body rounded-xl transition-colors"
             >
               Done
             </button>

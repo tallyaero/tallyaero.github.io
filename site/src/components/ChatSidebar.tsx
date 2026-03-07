@@ -193,22 +193,15 @@ export function ChatSidebar({ onClose, onCollapse }: ChatSidebarProps) {
       <div className="px-3 pt-3 pb-2 border-b border-edge">
         <div className="flex items-center justify-between mb-1">
           <label className="text-[10px] text-muted uppercase tracking-wider">Mode</label>
-          <div className="flex items-center gap-1">
-            {onCollapse && (
-              <button onClick={onCollapse} className="hidden lg:block p-1 text-muted hover:text-heading transition-colors" title="Collapse sidebar">
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 5l7 7-7 7M5 5l7 7-7 7" />
-                </svg>
-              </button>
-            )}
-            {onClose && (
-              <button onClick={onClose} className="lg:hidden p-1 text-muted hover:text-heading">
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              </button>
-            )}
-          </div>
+          <button
+            onClick={() => { onCollapse?.(); onClose?.(); }}
+            className="p-1 text-muted hover:text-heading transition-colors"
+            title="Collapse sidebar"
+          >
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 5l7 7-7 7M5 5l7 7-7 7" />
+            </svg>
+          </button>
         </div>
         <div ref={modeRef} className="relative">
           <button

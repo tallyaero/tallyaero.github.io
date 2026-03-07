@@ -17,6 +17,7 @@
   --th-body: #2d3748;
   --th-muted: #718096;
   --th-faint: #a0aec0;
+  --th-user-bubble: #e8edf3;
 }
 
 [data-theme="dark"] {
@@ -31,6 +32,7 @@
   --th-body: #e2e8f0;
   --th-muted: #a0aec0;
   --th-faint: #5a6a7a;
+  --th-user-bubble: #374151;
 }
 
 @theme {
@@ -42,6 +44,7 @@
   --color-active: var(--th-active);
   --color-edge: var(--th-edge);
   --color-input: var(--th-input);
+  --color-user-bubble: var(--th-user-bubble);
 
   /* Semantic text colors */
   --color-heading: var(--th-heading);

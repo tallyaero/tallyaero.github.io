@@ -1,7 +1,9 @@
 import { useState } from 'react';
-import { Outlet, useLocation } from 'react-router-dom';
+import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { TallyNav } from './TallyNav';
 import { ChatSidebar } from './ChatSidebar';
+import { AuthModal } from './AuthModal';
+import { VerificationModal } from './VerificationModal';
 import { useChatStore } from '@/stores/chatStore';
 
 export function SiteLayout() {
@@ -9,6 +11,9 @@ export function SiteLayout() {
   const [navCollapsed, setNavCollapsed] = useState(false);
   const [chatSidebarOpen, setChatSidebarOpen] = useState(false);
   const [chatSidebarCollapsed, setChatSidebarCollapsed] = useState(false);
+  const [showAuth, setShowAuth] = useState(false);
+  const [showVerify, setShowVerify] = useState(false);
+  const navigate = useNavigate();
   const location = useLocation();
   const isDashTwo = location.pathname === '/dashtwo';
   const showRightSidebar = isDashTwo || location.pathname === '/settings';
@@ -35,6 +40,8 @@ export function SiteLayout() {
           collapsed={navCollapsed}
           onToggle={() => setNavCollapsed(!navCollapsed)}
           onClose={() => setNavOpen(false)}
+          onShowAuth={() => { setNavOpen(false); setShowAuth(true); }}
+          onShowVerify={() => { setNavOpen(false); setShowVerify(true); }}
         />
       </div>
 
@@ -56,7 +63,7 @@ export function SiteLayout() {
           {showRightSidebar && (
             <button onClick={() => setChatSidebarOpen(true)} className="p-1.5 text-aero-text-subtle hover:text-white" title="Conversations">
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 19l-7-7 7-7M18 19l-7-7 7-7" />
               </svg>
             </button>
           )}
@@ -119,7 +126,7 @@ export function SiteLayout() {
                 {/* Settings */}
                 <div className="border-t border-edge px-2 py-2">
                   <button
-                    onClick={() => setChatSidebarCollapsed(false)}
+                    onClick={() => navigate('/settings')}
                     className="w-full flex justify-center p-2 rounded-lg text-muted hover:text-heading hover:bg-hover transition-colors"
                     title="Settings"
                   >
@@ -149,6 +156,10 @@ export function SiteLayout() {
           </div>
         </>
       )}
+
+      {/* Modals — rendered at top level so they're never clipped */}
+      {showAuth && <AuthModal onClose={() => setShowAuth(false)} />}
+      {showVerify && <VerificationModal onClose={() => setShowVerify(false)} />}
     </div>
   );
 }

@@ -190,7 +190,7 @@ export const LANDING_PAGES: LandingPageConfig[] = [
       'Practice and exam modes (exam mode: no feedback until the end)',
       'All certificates: Private, Instrument, Commercial, CFI, ATP',
     ],
-    status: 'live',
+    status: 'building',
     dashtwoPrompt: 'Run me through a private pilot oral exam on weather.',
   },
   {

@@ -20,35 +20,45 @@ export function ChatView() {
     setShowScrollBtn(!atBottom && messages.length > 0);
   }, [messages.length]);
 
-  // Auto-scroll during streaming via store subscription (not React re-render)
+  // Suppress streaming auto-scroll briefly after sending a new message
+  const justSentRef = useRef(false);
+
+  // Auto-scroll during streaming
   useEffect(() => {
     const unsub = useChatStore.subscribe((state) => {
-      if (state.isStreaming && scrollRef.current && !userScrolledUp.current) {
+      if (state.isStreaming && scrollRef.current && !userScrolledUp.current && !justSentRef.current) {
         scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
       }
     });
     return unsub;
   }, []);
 
-  // Scroll on new messages
+  // When streaming starts, scroll the latest user message to the top of the viewport
+  const wasStreaming = useRef(false);
   useEffect(() => {
-    if (scrollRef.current && !userScrolledUp.current) {
-      scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+    if (isStreaming && !wasStreaming.current) {
+      // Streaming just started — scroll user message to top
+      userScrolledUp.current = false;
+      setShowScrollBtn(false);
+      justSentRef.current = true;
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          const container = scrollRef.current;
+          if (!container) return;
+          const messageList = container.querySelector('[data-messages]');
+          if (messageList && messageList.children.length >= 2) {
+            const userMsgEl = messageList.children[messageList.children.length - 2] as HTMLElement;
+            const containerRect = container.getBoundingClientRect();
+            const msgRect = userMsgEl.getBoundingClientRect();
+            const scrollTarget = container.scrollTop + (msgRect.top - containerRect.top) - 24;
+            container.scrollTo({ top: scrollTarget, behavior: 'smooth' });
+          }
+          setTimeout(() => { justSentRef.current = false; }, 1200);
+        });
+      });
     }
-  }, [messages]);
-
-  // Reset scroll lock when a new user message is sent
-  const prevMessageCount = useRef(messages.length);
-  useEffect(() => {
-    if (messages.length > prevMessageCount.current) {
-      const lastMsg = messages[messages.length - 1];
-      if (lastMsg?.role === 'user') {
-        userScrolledUp.current = false;
-        setShowScrollBtn(false);
-      }
-    }
-    prevMessageCount.current = messages.length;
-  }, [messages]);
+    wasStreaming.current = isStreaming;
+  }, [isStreaming]);
 
   const scrollToBottom = () => {
     if (scrollRef.current) {
@@ -64,15 +74,16 @@ export function ChatView() {
     <div className="flex flex-col h-full bg-base relative">
       <div ref={scrollRef} onScroll={handleScroll} className="flex-1 overflow-y-auto" style={{ scrollbarGutter: 'stable' }}>
         {hasMessages ? (
-          <div className="max-w-3xl mx-auto px-5 py-8 space-y-8">
+          <div data-messages className="max-w-3xl mx-auto px-5 py-8 space-y-8">
             {messages.map((msg, i) => {
               const isLastAssistant = msg.role === 'assistant' && i === messages.length - 1;
               return (
-                <MessageBubble
-                  key={msg.id}
-                  message={msg}
-                  isStreaming={isLastAssistant && isStreaming}
-                />
+                <div key={msg.id}>
+                  <MessageBubble
+                    message={msg}
+                    isStreaming={isLastAssistant && isStreaming}
+                  />
+                </div>
               );
             })}
           </div>

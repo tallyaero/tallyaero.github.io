@@ -1,8 +1,9 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useThemeStore, type Theme } from '@/stores/themeStore';
 import { usePersonaStore } from '@/stores/personaStore';
 import { useAuthStore } from '@/stores/authStore';
+import { useChatStore } from '@/stores/chatStore';
 import { PERSONA_CATALOG, MILITARY_PERSONAS, type PersonaId, type MilitaryBranch } from '@/types/persona';
 import { UpgradeCard } from './UpgradeCard';
 
@@ -14,18 +15,107 @@ const BRANCH_OPTIONS: { value: MilitaryBranch; label: string }[] = [
   { value: 'coast_guard', label: 'Coast Guard' },
 ];
 
+const SHORTCUTS = [
+  { keys: 'Ctrl + Shift + O', action: 'New conversation' },
+  { keys: 'Ctrl + Shift + S', action: 'Stop streaming' },
+  { keys: 'Enter', action: 'Send message' },
+  { keys: 'Shift + Enter', action: 'New line in message' },
+  { keys: 'Escape', action: 'Cancel editing' },
+];
+
 export function SettingsView() {
   const navigate = useNavigate();
   const { theme, setTheme } = useThemeStore();
-  const { user, profile, openPortal, updateAircraftType } = useAuthStore();
+  const { user, profile, openPortal, updateAircraftType, changePassword, deleteAccount, updateDisplayName } = useAuthStore();
+  const conversations = useChatStore(s => s.conversations);
+  const clearAllConversations = useChatStore(s => s.clearAllConversations);
   const [aircraftInput, setAircraftInput] = useState(profile?.aircraftType || '');
+  const [displayNameInput, setDisplayNameInput] = useState(profile?.displayName || '');
   const {
     activePersona, callsign, pilotName, militaryBranch, customPromptPrefix,
     setPersona, setCallsign, setPilotName, setMilitaryBranch, setCustomPromptPrefix,
   } = usePersonaStore();
 
+  // Password change state
+  const [showPasswordForm, setShowPasswordForm] = useState(false);
+  const [currentPassword, setCurrentPassword] = useState('');
+  const [newPassword, setNewPassword] = useState('');
+  const [passwordMsg, setPasswordMsg] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
+
+  // Delete account state
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  const [deletePassword, setDeletePassword] = useState('');
+  const [deleteError, setDeleteError] = useState('');
+
+  // Clear conversations state
+  const [showClearConfirm, setShowClearConfirm] = useState(false);
+
   const isMilitary = MILITARY_PERSONAS.includes(activePersona);
   const activePersonaConfig = PERSONA_CATALOG.find(p => p.id === activePersona);
+
+  // Usage stats from local conversations
+  const stats = useMemo(() => {
+    let totalMessages = 0;
+    let totalConversations = conversations.length;
+    let oldestDate: number | null = null;
+    for (const conv of conversations) {
+      totalMessages += conv.messages.length;
+      if (!oldestDate || conv.createdAt < oldestDate) oldestDate = conv.createdAt;
+    }
+    return { totalMessages, totalConversations, oldestDate };
+  }, [conversations]);
+
+  const isEmailUser = user?.providerData?.[0]?.providerId === 'password';
+
+  const handlePasswordChange = async () => {
+    setPasswordMsg(null);
+    if (newPassword.length < 6) {
+      setPasswordMsg({ type: 'error', text: 'Password must be at least 6 characters' });
+      return;
+    }
+    try {
+      await changePassword(currentPassword, newPassword);
+      setPasswordMsg({ type: 'success', text: 'Password updated' });
+      setCurrentPassword('');
+      setNewPassword('');
+      setTimeout(() => { setShowPasswordForm(false); setPasswordMsg(null); }, 1500);
+    } catch (err) {
+      setPasswordMsg({ type: 'error', text: err instanceof Error ? err.message : 'Failed' });
+    }
+  };
+
+  const handleDeleteAccount = async () => {
+    setDeleteError('');
+    try {
+      await deleteAccount(deletePassword);
+      navigate('/dashtwo');
+    } catch (err) {
+      setDeleteError(err instanceof Error ? err.message : 'Failed');
+    }
+  };
+
+  const handleExportData = () => {
+    const data = {
+      exportDate: new Date().toISOString(),
+      conversations: conversations.map(c => ({
+        title: c.title,
+        mode: c.mode,
+        createdAt: new Date(c.createdAt).toISOString(),
+        messages: c.messages.map(m => ({
+          role: m.role,
+          content: m.content,
+          timestamp: new Date(m.timestamp).toISOString(),
+        })),
+      })),
+    };
+    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `dashtwo-export-${new Date().toISOString().split('T')[0]}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+  };
 
   return (
     <div className="min-h-screen bg-base overflow-y-auto">
@@ -42,6 +132,99 @@ export function SettingsView() {
             </svg>
           </button>
         </div>
+
+        {/* Account */}
+        {user && (
+          <section className="mb-8">
+            <h2 className="text-sm font-semibold text-heading mb-3">Account</h2>
+            <div className="bg-panel rounded-xl border border-edge p-4 space-y-4">
+              {/* Email */}
+              <div>
+                <label className="text-xs text-muted uppercase tracking-wider mb-1 block">Email</label>
+                <p className="text-sm text-body">{user.email}</p>
+              </div>
+
+              {/* Display Name */}
+              <div>
+                <label className="text-xs text-muted uppercase tracking-wider mb-1.5 block">Display Name</label>
+                <div className="flex gap-2">
+                  <input
+                    type="text"
+                    value={displayNameInput}
+                    onChange={e => setDisplayNameInput(e.target.value)}
+                    placeholder="Your name"
+                    maxLength={40}
+                    className="flex-1 bg-input border border-edge rounded-lg px-3 py-2 text-sm text-heading placeholder-faint focus:outline-none focus:border-aero-blue"
+                  />
+                  <button
+                    onClick={() => updateDisplayName(displayNameInput.trim())}
+                    disabled={displayNameInput.trim() === (profile?.displayName || '')}
+                    className="px-4 py-2 text-sm bg-aero-blue hover:bg-aero-blue-dark text-white rounded-lg transition-colors btn-press disabled:opacity-40 disabled:cursor-not-allowed"
+                  >
+                    Save
+                  </button>
+                </div>
+              </div>
+
+              {/* Sign-in provider */}
+              <div>
+                <label className="text-xs text-muted uppercase tracking-wider mb-1 block">Sign-in Method</label>
+                <p className="text-sm text-body capitalize">{user.providerData?.[0]?.providerId === 'password' ? 'Email & Password' : 'Google'}</p>
+              </div>
+
+              {/* Change Password — only for email users */}
+              {isEmailUser && (
+                <div>
+                  {!showPasswordForm ? (
+                    <button
+                      onClick={() => setShowPasswordForm(true)}
+                      className="text-sm text-aero-blue hover:text-aero-blue-dark transition-colors"
+                    >
+                      Change password
+                    </button>
+                  ) : (
+                    <div className="space-y-2">
+                      <input
+                        type="password"
+                        value={currentPassword}
+                        onChange={e => setCurrentPassword(e.target.value)}
+                        placeholder="Current password"
+                        className="w-full bg-input border border-edge rounded-lg px-3 py-2 text-sm text-heading placeholder-faint focus:outline-none focus:border-aero-blue"
+                      />
+                      <input
+                        type="password"
+                        value={newPassword}
+                        onChange={e => setNewPassword(e.target.value)}
+                        placeholder="New password (min 6 characters)"
+                        className="w-full bg-input border border-edge rounded-lg px-3 py-2 text-sm text-heading placeholder-faint focus:outline-none focus:border-aero-blue"
+                      />
+                      <div className="flex gap-2">
+                        <button
+                          onClick={handlePasswordChange}
+                          disabled={!currentPassword || !newPassword}
+                          className="px-4 py-2 text-sm bg-aero-blue hover:bg-aero-blue-dark text-white rounded-lg transition-colors btn-press disabled:opacity-40 disabled:cursor-not-allowed"
+                        >
+                          Update Password
+                        </button>
+                        <button
+                          onClick={() => { setShowPasswordForm(false); setPasswordMsg(null); setCurrentPassword(''); setNewPassword(''); }}
+                          className="px-4 py-2 text-sm border border-edge rounded-lg text-body hover:bg-hover transition-colors"
+                        >
+                          Cancel
+                        </button>
+                      </div>
+                      {passwordMsg && (
+                        <p className={`text-xs ${passwordMsg.type === 'success' ? 'text-success' : 'text-red-400'}`}>
+                          {passwordMsg.text}
+                        </p>
+                      )}
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
+          </section>
+        )}
 
         {/* Theme */}
         <section className="mb-8">
@@ -197,6 +380,34 @@ export function SettingsView() {
           </section>
         )}
 
+        {/* Usage */}
+        <section className="mb-8">
+          <h2 className="text-sm font-semibold text-heading mb-3">Usage</h2>
+          <div className="bg-panel rounded-xl border border-edge p-4">
+            <div className="grid grid-cols-3 gap-4">
+              <div>
+                <div className="text-2xl font-bold text-heading">{stats.totalConversations}</div>
+                <div className="text-xs text-muted">Conversations</div>
+              </div>
+              <div>
+                <div className="text-2xl font-bold text-heading">{stats.totalMessages}</div>
+                <div className="text-xs text-muted">Messages</div>
+              </div>
+              <div>
+                <div className="text-2xl font-bold text-heading">
+                  {stats.oldestDate ? Math.max(1, Math.ceil((Date.now() - stats.oldestDate) / (1000 * 60 * 60 * 24))) : 0}
+                </div>
+                <div className="text-xs text-muted">Days active</div>
+              </div>
+            </div>
+            {user && profile?.tier === 'free' && !profile?.verificationStatus?.startsWith('verified') && (
+              <div className="mt-3 pt-3 border-t border-edge">
+                <p className="text-xs text-muted">Free tier: limited daily usage. Verify as a student or CFI for unlimited access.</p>
+              </div>
+            )}
+          </div>
+        </section>
+
         {/* Aircraft Type */}
         {user && (
           <section className="mb-8">
@@ -225,6 +436,76 @@ export function SettingsView() {
           </section>
         )}
 
+        {/* Data Controls */}
+        <section className="mb-8">
+          <h2 className="text-sm font-semibold text-heading mb-3">Data Controls</h2>
+          <div className="bg-panel rounded-xl border border-edge p-4 space-y-3">
+            {/* Export */}
+            <div className="flex items-center justify-between">
+              <div>
+                <div className="text-sm text-heading">Export conversations</div>
+                <div className="text-xs text-muted">Download all your conversations as JSON</div>
+              </div>
+              <button
+                onClick={handleExportData}
+                disabled={conversations.length === 0}
+                className="px-4 py-2 text-sm border border-edge rounded-lg text-body hover:bg-hover transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+              >
+                Export
+              </button>
+            </div>
+
+            {/* Clear conversations */}
+            <div className="border-t border-edge pt-3">
+              <div className="flex items-center justify-between">
+                <div>
+                  <div className="text-sm text-heading">Clear all conversations</div>
+                  <div className="text-xs text-muted">{conversations.length} conversation{conversations.length !== 1 ? 's' : ''} stored locally</div>
+                </div>
+                {!showClearConfirm ? (
+                  <button
+                    onClick={() => setShowClearConfirm(true)}
+                    disabled={conversations.length === 0}
+                    className="px-4 py-2 text-sm border border-red-500/30 rounded-lg text-red-400 hover:bg-red-500/10 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+                  >
+                    Clear
+                  </button>
+                ) : (
+                  <div className="flex gap-2">
+                    <button
+                      onClick={() => { clearAllConversations(); setShowClearConfirm(false); }}
+                      className="px-4 py-2 text-sm bg-red-500 hover:bg-red-600 text-white rounded-lg transition-colors"
+                    >
+                      Confirm
+                    </button>
+                    <button
+                      onClick={() => setShowClearConfirm(false)}
+                      className="px-4 py-2 text-sm border border-edge rounded-lg text-body hover:bg-hover transition-colors"
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Keyboard Shortcuts */}
+        <section className="mb-8">
+          <h2 className="text-sm font-semibold text-heading mb-3">Keyboard Shortcuts</h2>
+          <div className="bg-panel rounded-xl border border-edge p-4">
+            <div className="space-y-2">
+              {SHORTCUTS.map(s => (
+                <div key={s.keys} className="flex items-center justify-between">
+                  <span className="text-sm text-body">{s.action}</span>
+                  <kbd className="px-2 py-1 bg-input border border-edge rounded text-xs text-muted font-mono">{s.keys}</kbd>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
         {/* CFI Referral Link */}
         {profile?.verificationStatus === 'verified_cfi' && profile.referralCode && (
           <section className="mb-8">
@@ -250,6 +531,56 @@ export function SettingsView() {
                   Copy
                 </button>
               </div>
+            </div>
+          </section>
+        )}
+
+        {/* Delete Account — danger zone */}
+        {user && isEmailUser && (
+          <section className="mb-8">
+            <h2 className="text-sm font-semibold text-red-400 mb-3">Danger Zone</h2>
+            <div className="bg-panel rounded-xl border border-red-500/20 p-4">
+              {!showDeleteConfirm ? (
+                <div className="flex items-center justify-between">
+                  <div>
+                    <div className="text-sm text-heading">Delete account</div>
+                    <div className="text-xs text-muted">Permanently delete your account and all data</div>
+                  </div>
+                  <button
+                    onClick={() => setShowDeleteConfirm(true)}
+                    className="px-4 py-2 text-sm border border-red-500/30 rounded-lg text-red-400 hover:bg-red-500/10 transition-colors"
+                  >
+                    Delete Account
+                  </button>
+                </div>
+              ) : (
+                <div className="space-y-3">
+                  <p className="text-sm text-red-400">This action cannot be undone. Enter your password to confirm.</p>
+                  <input
+                    type="password"
+                    value={deletePassword}
+                    onChange={e => setDeletePassword(e.target.value)}
+                    placeholder="Enter your password"
+                    className="w-full bg-input border border-edge rounded-lg px-3 py-2 text-sm text-heading placeholder-faint focus:outline-none focus:border-red-500"
+                  />
+                  {deleteError && <p className="text-xs text-red-400">{deleteError}</p>}
+                  <div className="flex gap-2">
+                    <button
+                      onClick={handleDeleteAccount}
+                      disabled={!deletePassword}
+                      className="px-4 py-2 text-sm bg-red-500 hover:bg-red-600 text-white rounded-lg transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+                    >
+                      Permanently Delete
+                    </button>
+                    <button
+                      onClick={() => { setShowDeleteConfirm(false); setDeletePassword(''); setDeleteError(''); }}
+                      className="px-4 py-2 text-sm border border-edge rounded-lg text-body hover:bg-hover transition-colors"
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                </div>
+              )}
             </div>
           </section>
         )}

@@ -10,9 +10,13 @@ import {
   signInWithPopup,
   signOut as firebaseSignOut,
   onAuthStateChanged,
+  updatePassword as firebaseUpdatePassword,
+  EmailAuthProvider,
+  reauthenticateWithCredential,
+  deleteUser,
   type User,
 } from 'firebase/auth';
-import { doc, getDoc, setDoc, updateDoc, serverTimestamp } from 'firebase/firestore';
+import { doc, getDoc, setDoc, updateDoc, deleteDoc, serverTimestamp } from 'firebase/firestore';
 import { auth, db, googleProvider } from '@/lib/firebase';
 
 export type VerificationStatus = 'unverified' | 'verified_student' | 'verified_cfi' | 'manual_review';
@@ -51,6 +55,9 @@ interface AuthState {
   startCheckout: () => Promise<void>;
   openPortal: () => Promise<void>;
   updateAircraftType: (aircraftType: string) => Promise<void>;
+  changePassword: (currentPassword: string, newPassword: string) => Promise<void>;
+  deleteAccount: (password: string) => Promise<void>;
+  updateDisplayName: (displayName: string) => Promise<void>;
 }
 
 function generateReferralCode(): string {
@@ -209,5 +216,49 @@ export const useAuthStore = create<AuthState>((set) => ({
         profile: state.profile ? { ...state.profile, aircraftType } : null,
       }));
     } catch { /* ignore */ }
+  },
+
+  updateDisplayName: async (displayName: string) => {
+    const user = auth.currentUser;
+    if (!user) return;
+    try {
+      await updateDoc(doc(db, 'users', user.uid), { displayName });
+      set(state => ({
+        profile: state.profile ? { ...state.profile, displayName } : null,
+      }));
+    } catch (err) {
+      set({ error: err instanceof Error ? err.message : 'Update failed' });
+    }
+  },
+
+  changePassword: async (currentPassword: string, newPassword: string) => {
+    const user = auth.currentUser;
+    if (!user || !user.email) {
+      set({ error: 'No email account to update' });
+      return;
+    }
+    try {
+      const credential = EmailAuthProvider.credential(user.email, currentPassword);
+      await reauthenticateWithCredential(user, credential);
+      await firebaseUpdatePassword(user, newPassword);
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : 'Password change failed';
+      throw new Error(msg.replace('Firebase: ', ''));
+    }
+  },
+
+  deleteAccount: async (password: string) => {
+    const user = auth.currentUser;
+    if (!user || !user.email) return;
+    try {
+      const credential = EmailAuthProvider.credential(user.email, password);
+      await reauthenticateWithCredential(user, credential);
+      await deleteDoc(doc(db, 'users', user.uid));
+      await deleteUser(user);
+      set({ user: null, profile: null });
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : 'Delete failed';
+      throw new Error(msg.replace('Firebase: ', ''));
+    }
   },
 }));

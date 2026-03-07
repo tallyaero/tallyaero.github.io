@@ -27,6 +27,7 @@ interface ChatState {
   renameConversation: (id: string, title: string) => void;
   editMessage: (messageId: string, newContent: string) => void;
   regenerateResponse: (messageId: string) => void;
+  clearAllConversations: () => void;
   setFeedback: (messageId: string, feedback: 'up' | 'down', text?: string) => void;
 }
 
@@ -136,6 +137,10 @@ export const useChatStore = create<ChatState>()(
       conversations: state.conversations.filter(c => c.id !== id),
       ...(state.activeConversationId === id ? { messages: [], activeConversationId: null } : {}),
     }));
+  },
+
+  clearAllConversations: () => {
+    set({ conversations: [], messages: [], activeConversationId: null, streamingContent: '' });
   },
 
   renameConversation: (id, title) => {

@@ -22,12 +22,6 @@ export function LandingPage({ config }: LandingPageProps) {
     };
   }, [config.title, config.path]);
 
-  const statusBadge = {
-    live: { label: 'Live Now', color: 'bg-success/10 text-success border-success/30' },
-    building: { label: 'In Development', color: 'bg-aero-blue/10 text-aero-blue-light border-aero-blue/30' },
-    planned: { label: 'Coming Soon', color: 'bg-aero-orange/10 text-aero-orange-light border-aero-orange/30' },
-  }[config.status];
-
   return (
     <div className="min-h-screen overflow-y-auto bg-base">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 py-10 sm:py-16">
@@ -36,9 +30,6 @@ export function LandingPage({ config }: LandingPageProps) {
           <img src="/tally-aero-logo.png" alt="Tally Aero" className="h-10 mx-auto mb-6 object-contain" />
           <div className="inline-flex items-center gap-2 mb-6">
             <NavIcon icon={config.icon} className="w-8 h-8 text-aero-blue-light" />
-            <span className={`text-xs px-2.5 py-1 rounded-full border ${statusBadge.color}`}>
-              {statusBadge.label}
-            </span>
           </div>
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-heading mb-4">
             {config.headline}
