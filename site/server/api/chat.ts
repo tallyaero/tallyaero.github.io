@@ -18,6 +18,7 @@ import { detectMode } from '../engine/modeDetector';
 import { extractCitationsFromQdrant } from '../engine/citationExtractor';
 import { calculateCostCents, isOverDailyCap, getDateKey, type UsageRecord } from '../engine/usageTracker';
 import { adminAuth, adminDb } from '../engine/firebaseAdmin';
+import { checkRateLimit } from '../engine/rateLimiter';
 
 interface ChatRequestBody {
   query: string;
@@ -84,6 +85,17 @@ async function recordUsage(uid: string, model: string, inputTokens: number, outp
 }
 
 export async function handleChat(req: Request, res: Response) {
+  // Rate limiting — 30 requests per minute per IP
+  const clientIp = req.ip || req.headers['x-forwarded-for']?.toString() || 'unknown';
+  const rateCheck = checkRateLimit(clientIp);
+  if (rateCheck) {
+    res.status(429).json({
+      error: 'Too many requests. Please wait a moment and try again.',
+      retryAfterMs: rateCheck.retryAfterMs,
+    });
+    return;
+  }
+
   const body = req.body as ChatRequestBody;
 
   // Validate input
@@ -112,9 +124,13 @@ export async function handleChat(req: Request, res: Response) {
         res.setHeader('Content-Type', 'text/event-stream');
         res.setHeader('Cache-Control', 'no-cache');
         res.flushHeaders();
+        const limitMessage = userAuth.tier === 'paid'
+          ? "You've hit the daily message limit (100 messages). This resets at midnight UTC."
+          : "You've used all your free DashTwo time for today. Upgrade to Pro for unlimited access, or verify as a student pilot for free unlimited access.";
         sendSSE(res, {
           type: 'daily_limit',
-          message: "You've used all your free DashTwo time for today. Come back tomorrow, or verify as a student pilot for unlimited access.",
+          message: limitMessage,
+          tier: userAuth.tier,
         });
         sendSSE(res, { type: 'done', usage: null });
         res.write('data: [DONE]\n\n');

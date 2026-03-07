@@ -158,6 +158,23 @@ body {
 ::-webkit-scrollbar-thumb { background: var(--th-edge); border-radius: 3px; }
 ::-webkit-scrollbar-thumb:hover { background: var(--th-muted); }
 
+/* Loading breathe animation */
+@keyframes dashtwo-breathe {
+  0%, 100% { transform: scale(0.85); opacity: 0.5; }
+  50% { transform: scale(1.15); opacity: 1; }
+}
+.dashtwo-breathe {
+  animation: dashtwo-breathe 1.8s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+/* Safe area insets for PWA (notch, home indicator) */
+@supports (padding-bottom: env(safe-area-inset-bottom)) {
+  .safe-bottom {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+}
+
 /* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {

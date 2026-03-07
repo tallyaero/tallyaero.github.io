@@ -29,7 +29,7 @@ export function ChatInput() {
   };
 
   return (
-    <div className="px-4 pb-4 pt-2">
+    <div className="px-4 pb-4 pt-2 safe-bottom">
       <div className="relative max-w-3xl mx-auto">
         <div className="flex items-end bg-panel border border-edge rounded-2xl shadow-lg focus-within:border-aero-blue/50 transition-colors">
           <textarea

@@ -1,7 +1,10 @@
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useThemeStore, type Theme } from '@/stores/themeStore';
 import { usePersonaStore } from '@/stores/personaStore';
+import { useAuthStore } from '@/stores/authStore';
 import { PERSONA_CATALOG, MILITARY_PERSONAS, type PersonaId, type MilitaryBranch } from '@/types/persona';
+import { UpgradeCard } from './UpgradeCard';
 
 const BRANCH_OPTIONS: { value: MilitaryBranch; label: string }[] = [
   { value: 'air_force', label: 'Air Force' },
@@ -14,6 +17,8 @@ const BRANCH_OPTIONS: { value: MilitaryBranch; label: string }[] = [
 export function SettingsView() {
   const navigate = useNavigate();
   const { theme, setTheme } = useThemeStore();
+  const { user, profile, openPortal, updateAircraftType } = useAuthStore();
+  const [aircraftInput, setAircraftInput] = useState(profile?.aircraftType || '');
   const {
     activePersona, callsign, pilotName, militaryBranch, customPromptPrefix,
     setPersona, setCallsign, setPilotName, setMilitaryBranch, setCustomPromptPrefix,
@@ -153,6 +158,101 @@ export function SettingsView() {
             )}
           </div>
         </section>
+
+        {/* Subscription */}
+        {user && (
+          <section className="mb-8">
+            <h2 className="text-sm font-semibold text-heading mb-3">Subscription</h2>
+            {profile?.tier === 'paid' ? (
+              <div className="bg-panel rounded-xl border border-edge p-4">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <div className="flex items-center gap-2">
+                      <span className="text-sm font-medium text-heading">DashTwo Pro</span>
+                      <span className="text-[10px] px-2 py-0.5 rounded-full bg-success/10 text-success border border-success/30">Active</span>
+                    </div>
+                    <p className="text-xs text-muted mt-1">
+                      {profile.paidSince ? `Member since ${new Date(profile.paidSince).toLocaleDateString()}` : 'Unlimited access'}
+                    </p>
+                  </div>
+                  <button
+                    onClick={openPortal}
+                    className="px-4 py-2 text-sm border border-edge rounded-lg text-body hover:bg-hover transition-colors"
+                  >
+                    Manage
+                  </button>
+                </div>
+              </div>
+            ) : profile?.verificationStatus?.startsWith('verified') ? (
+              <div className="bg-panel rounded-xl border border-edge p-4">
+                <div className="flex items-center gap-2">
+                  <span className="text-sm font-medium text-heading">Verified {profile.verificationStatus === 'verified_cfi' ? 'CFI' : 'Student'}</span>
+                  <span className="text-[10px] px-2 py-0.5 rounded-full bg-success/10 text-success border border-success/30">Unlimited</span>
+                </div>
+                <p className="text-xs text-muted mt-1">You have unlimited DashTwo access through verification.</p>
+              </div>
+            ) : (
+              <UpgradeCard />
+            )}
+          </section>
+        )}
+
+        {/* Aircraft Type */}
+        {user && (
+          <section className="mb-8">
+            <h2 className="text-sm font-semibold text-heading mb-3">Aircraft</h2>
+            <div className="bg-panel rounded-xl border border-edge p-4">
+              <label className="text-xs text-muted uppercase tracking-wider mb-1.5 block">Primary Aircraft Type</label>
+              <div className="flex gap-2">
+                <input
+                  type="text"
+                  value={aircraftInput}
+                  onChange={e => setAircraftInput(e.target.value)}
+                  placeholder="e.g. Cessna 172S, PA-28-181"
+                  maxLength={50}
+                  className="flex-1 bg-input border border-edge rounded-lg px-3 py-2 text-sm text-heading placeholder-faint focus:outline-none focus:border-aero-blue"
+                />
+                <button
+                  onClick={() => updateAircraftType(aircraftInput.trim())}
+                  disabled={aircraftInput.trim() === (profile?.aircraftType || '')}
+                  className="px-4 py-2 text-sm bg-aero-blue hover:bg-aero-blue-dark text-white rounded-lg transition-colors btn-press disabled:opacity-40 disabled:cursor-not-allowed"
+                >
+                  Save
+                </button>
+              </div>
+              <p className="text-[10px] text-faint mt-1.5">Used to personalize DashTwo answers for your aircraft.</p>
+            </div>
+          </section>
+        )}
+
+        {/* CFI Referral Link */}
+        {profile?.verificationStatus === 'verified_cfi' && profile.referralCode && (
+          <section className="mb-8">
+            <h2 className="text-sm font-semibold text-heading mb-3">CFI Referral Link</h2>
+            <div className="bg-panel rounded-xl border border-edge p-4">
+              <p className="text-sm text-body mb-3">
+                Share this link with your students. When they sign up, they get unlimited access and you get credit.
+              </p>
+              <div className="flex gap-2">
+                <input
+                  type="text"
+                  readOnly
+                  value={`${window.location.origin}/dashtwo?ref=${profile.referralCode}`}
+                  className="flex-1 bg-input border border-edge rounded-lg px-3 py-2 text-sm text-heading select-all"
+                  onFocus={e => e.target.select()}
+                />
+                <button
+                  onClick={() => {
+                    navigator.clipboard.writeText(`${window.location.origin}/dashtwo?ref=${profile.referralCode}`);
+                  }}
+                  className="px-4 py-2 text-sm bg-aero-blue hover:bg-aero-blue-dark text-white rounded-lg transition-colors btn-press"
+                >
+                  Copy
+                </button>
+              </div>
+            </div>
+          </section>
+        )}
 
         {/* About */}
         <section>

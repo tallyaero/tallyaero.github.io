@@ -9,6 +9,7 @@ interface ChatState {
   messages: ChatMessage[];
   currentMode: DashTwoMode;
   isStreaming: boolean;
+
   streamingContent: string;
   abortController: AbortController | null;
 
@@ -23,6 +24,9 @@ interface ChatState {
   newConversation: () => void;
   loadConversation: (id: string) => void;
   deleteConversation: (id: string) => void;
+  renameConversation: (id: string, title: string) => void;
+  editMessage: (messageId: string, newContent: string) => void;
+  regenerateResponse: (messageId: string) => void;
   setFeedback: (messageId: string, feedback: 'up' | 'down', text?: string) => void;
 }
 
@@ -45,6 +49,7 @@ export const useChatStore = create<ChatState>()(
   messages: [],
   currentMode: 'auto',
   isStreaming: false,
+
   streamingContent: '',
   abortController: null,
   conversations: [],
@@ -133,6 +138,40 @@ export const useChatStore = create<ChatState>()(
     }));
   },
 
+  renameConversation: (id, title) => {
+    set(state => ({
+      conversations: state.conversations.map(c =>
+        c.id === id ? { ...c, title } : c
+      ),
+    }));
+  },
+
+  editMessage: (messageId, newContent) => {
+    const state = get();
+    if (state.isStreaming) return;
+    // Find the message index, truncate everything after it, and resend
+    const msgIndex = state.messages.findIndex(m => m.id === messageId);
+    if (msgIndex === -1) return;
+    const truncated = state.messages.slice(0, msgIndex);
+    set({ messages: truncated });
+    // Send as new message (which will append user + assistant messages)
+    get().sendMessage(newContent);
+  },
+
+  regenerateResponse: (messageId) => {
+    const state = get();
+    if (state.isStreaming) return;
+    const msgIndex = state.messages.findIndex(m => m.id === messageId);
+    if (msgIndex === -1) return;
+    // Find the preceding user message
+    const prevUserMsg = state.messages.slice(0, msgIndex).reverse().find(m => m.role === 'user');
+    if (!prevUserMsg) return;
+    // Truncate from the assistant message onward
+    const truncated = state.messages.slice(0, msgIndex);
+    set({ messages: truncated });
+    get().sendMessage(prevUserMsg.content);
+  },
+
   sendMessage: async (query) => {
     const state = get();
     if (state.isStreaming) return;
@@ -162,154 +201,193 @@ export const useChatStore = create<ChatState>()(
       abortController,
     });
 
+
+    // Buffer streaming updates to one per animation frame
+    let pendingContent: string | null = null;
+    let rafId = 0;
+    const flushContent = () => {
+      if (pendingContent !== null) {
+        set({ streamingContent: pendingContent });
+        pendingContent = null;
+      }
+      rafId = 0;
+    };
+
     // Assign conversation ID if new
     if (!state.activeConversationId) {
       set({ activeConversationId: generateId() });
     }
 
-    try {
-      // Get auth token if signed in
-      const headers: Record<string, string> = { 'Content-Type': 'application/json' };
-      const currentUser = auth.currentUser;
-      if (currentUser) {
-        try {
-          const token = await currentUser.getIdToken();
-          headers['Authorization'] = `Bearer ${token}`;
-        } catch {
-          // Continue without auth
-        }
-      }
+    const MAX_RETRIES = 2;
+    let fullContent = '';
+    let citations: DashTwoCitation[] = [];
+    let model = '';
+    let attempt = 0;
+    let succeeded = false;
 
-      const response = await fetch('/api/chat', {
-        method: 'POST',
-        headers,
-        body: JSON.stringify({
-          query,
-          mode: state.currentMode,
-          personaPrefix: usePersonaStore.getState().getActivePromptPrefix(),
-          conversationHistory: buildConversationHistory(state.messages),
-        }),
-        signal: abortController.signal,
-      });
-
-      if (!response.ok) {
-        const errorText = await response.text();
-        throw new Error(errorText || `Server error: ${response.status}`);
-      }
-
-      const reader = response.body?.getReader();
-      if (!reader) throw new Error('No response body');
-
-      const decoder = new TextDecoder();
-      let buffer = '';
-      let fullContent = '';
-      let citations: DashTwoCitation[] = [];
-      let model = '';
-
-      while (true) {
-        const { done, value } = await reader.read();
-        if (done) break;
-
-        buffer += decoder.decode(value, { stream: true });
-        const lines = buffer.split('\n');
-        buffer = lines.pop() || '';
-
-        for (const line of lines) {
-          if (!line.startsWith('data: ')) continue;
-          const data = line.slice(6).trim();
-          if (!data || data === '[DONE]') continue;
-
+    while (attempt <= MAX_RETRIES && !succeeded) {
+      try {
+        // Get auth token if signed in
+        const headers: Record<string, string> = { 'Content-Type': 'application/json' };
+        const currentUser = auth.currentUser;
+        if (currentUser) {
           try {
-            const event = JSON.parse(data);
-
-            switch (event.type) {
-              case 'text':
-                fullContent += event.content;
-                set({ streamingContent: fullContent });
-                break;
-
-              case 'citations':
-                citations = event.citations;
-                break;
-
-              case 'mode_switch':
-                set({ currentMode: event.mode });
-                break;
-
-              case 'done':
-                model = event.usage?.model || '';
-                break;
-
-              case 'daily_limit':
-                fullContent = event.message;
-                break;
-
-              case 'error':
-                fullContent = `Error: ${event.message}`;
-                break;
-            }
+            const token = await currentUser.getIdToken();
+            headers['Authorization'] = `Bearer ${token}`;
           } catch {
-            // Skip malformed SSE events
+            // Continue without auth
           }
         }
+
+        const response = await fetch('/api/chat', {
+          method: 'POST',
+          headers,
+          body: JSON.stringify({
+            query,
+            mode: state.currentMode,
+            personaPrefix: usePersonaStore.getState().getActivePromptPrefix(),
+            conversationHistory: buildConversationHistory(state.messages),
+          }),
+          signal: abortController.signal,
+        });
+
+        if (!response.ok) {
+          const errorText = await response.text();
+          throw new Error(errorText || `Server error: ${response.status}`);
+        }
+
+        const reader = response.body?.getReader();
+        if (!reader) throw new Error('No response body');
+
+        const decoder = new TextDecoder();
+        let buffer = '';
+
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) break;
+
+          buffer += decoder.decode(value, { stream: true });
+          const lines = buffer.split('\n');
+          buffer = lines.pop() || '';
+
+          for (const line of lines) {
+            if (!line.startsWith('data: ')) continue;
+            const data = line.slice(6).trim();
+            if (!data || data === '[DONE]') continue;
+
+            try {
+              const event = JSON.parse(data);
+
+              switch (event.type) {
+                case 'text':
+                  fullContent += event.content;
+                  pendingContent = fullContent;
+                  if (!rafId) rafId = requestAnimationFrame(flushContent);
+                  break;
+
+                case 'citations':
+                  citations = event.citations;
+                  break;
+
+                case 'mode_switch':
+                  set({ currentMode: event.mode });
+                  break;
+
+                case 'done':
+                  model = event.usage?.model || '';
+                  break;
+
+                case 'daily_limit':
+                  fullContent = event.message;
+                  break;
+
+                case 'error':
+                  fullContent = `Error: ${event.message}`;
+                  break;
+              }
+            } catch {
+              // Skip malformed SSE events
+            }
+          }
+        }
+
+        succeeded = true;
+
+      } catch (err) {
+        // User abort — don't retry
+        if (err instanceof DOMException && err.name === 'AbortError') {
+          if (rafId) cancelAnimationFrame(rafId);
+          const partial = get().streamingContent;
+          set(state => ({
+            messages: state.messages.map(m =>
+              m.id === assistantMessage.id
+                ? { ...m, content: partial || 'Cancelled.' }
+                : m
+            ),
+            isStreaming: false,
+            streamingContent: '',
+            abortController: null,
+          }));
+          return;
+        }
+
+        // Server errors (4xx/5xx) — don't retry
+        const isServerError = err instanceof Error && err.message.startsWith('Server error:');
+        if (isServerError || attempt >= MAX_RETRIES) {
+          if (rafId) cancelAnimationFrame(rafId);
+          // If we got partial content, keep it with a note
+          const errorMsg = err instanceof Error ? err.message : 'Something went wrong';
+          const finalContent = fullContent
+            ? fullContent + '\n\n*[Connection lost — partial response]*'
+            : `Error: ${errorMsg}`;
+          set(state => ({
+            messages: state.messages.map(m =>
+              m.id === assistantMessage.id
+                ? { ...m, content: finalContent, citations: citations.length ? citations : undefined }
+                : m
+            ),
+            isStreaming: false,
+            streamingContent: '',
+            abortController: null,
+          }));
+          return;
+        }
+
+        // Network error — retry after brief delay
+        attempt++;
+        await new Promise(r => setTimeout(r, 1000 * attempt));
       }
+    }
 
-      // Finalize the assistant message
-      set(state => {
-        const updatedMessages = state.messages.map(m =>
-          m.id === assistantMessage.id
-            ? { ...m, content: fullContent, citations, model }
-            : m
-        );
-        // Save to conversations list so sidebar stays in sync
-        const convId = state.activeConversationId!;
-        const existing = state.conversations.find(c => c.id === convId);
-        const conv: Conversation = {
-          id: convId,
-          title: existing?.title || generateTitle(updatedMessages[0]?.content || 'New chat'),
-          messages: updatedMessages,
-          mode: state.currentMode,
-          createdAt: existing?.createdAt || Date.now(),
-          updatedAt: Date.now(),
-        };
-        return {
-          messages: updatedMessages,
-          conversations: [conv, ...state.conversations.filter(c => c.id !== convId)],
-          isStreaming: false,
-          streamingContent: '',
-          abortController: null,
-        };
-      });
+    // Cancel any pending animation frame and flush
+    if (rafId) cancelAnimationFrame(rafId);
+    pendingContent = null;
 
-    } catch (err) {
-      if (err instanceof DOMException && err.name === 'AbortError') {
-        // User cancelled — keep partial content
-        const partial = get().streamingContent;
-        set(state => ({
-          messages: state.messages.map(m =>
-            m.id === assistantMessage.id
-              ? { ...m, content: partial || 'Cancelled.' }
-              : m
-          ),
-          isStreaming: false,
-          streamingContent: '',
-          abortController: null,
-        }));
-        return;
-      }
-
-      const errorMsg = err instanceof Error ? err.message : 'Something went wrong';
-      set(state => ({
-        messages: state.messages.map(m =>
-          m.id === assistantMessage.id
-            ? { ...m, content: `Error: ${errorMsg}` }
-            : m
-        ),
+    // Finalize the assistant message
+    set(state => {
+      const updatedMessages = state.messages.map(m =>
+        m.id === assistantMessage.id
+          ? { ...m, content: fullContent, citations, model }
+          : m
+      );
+      const convId = state.activeConversationId!;
+      const existing = state.conversations.find(c => c.id === convId);
+      const conv: Conversation = {
+        id: convId,
+        title: existing?.title || generateTitle(updatedMessages[0]?.content || 'New chat'),
+        messages: updatedMessages,
+        mode: state.currentMode,
+        createdAt: existing?.createdAt || Date.now(),
+        updatedAt: Date.now(),
+      };
+      return {
+        messages: updatedMessages,
+        conversations: [conv, ...state.conversations.filter(c => c.id !== convId)],
         isStreaming: false,
         streamingContent: '',
         abortController: null,
-      }));
-    }
+      };
+    });
   },
 }),
     {
@@ -325,6 +403,7 @@ export const useChatStore = create<ChatState>()(
         ...(persisted as Partial<ChatState>),
         // Never restore transient streaming state
         isStreaming: false,
+      
         streamingContent: '',
         abortController: null,
       }),

@@ -3,7 +3,13 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/png" href="/dashtwo-icon.png" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="manifest" href="/manifest.json" />
+    <link rel="apple-touch-icon" href="/dashtwo-icon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="DashTwo" />
+    <link rel="canonical" href="https://tallyaero.com" />
     <meta name="description" content="Tally Aero — AI-powered flight training platform with DashTwo aviation wingman. 515K+ FAA documents, checkride prep, training tools, skill tracking, and more." />
     <meta name="theme-color" content="#0f1117" />
 
@@ -11,7 +17,7 @@
     <meta property="og:type" content="website" />
     <meta property="og:title" content="Tally Aero — AI Flight Training Platform" />
     <meta property="og:description" content="DashTwo AI aviation wingman backed by 515K+ FAA documents. Checkride prep, training tools, skill tracking, and career progression." />
-    <meta property="og:image" content="/dashtwo-logo.png" />
+    <meta property="og:image" content="/dashtwo-icon.png" />
     <meta property="og:url" content="https://tallyaero.com" />
     <meta property="og:site_name" content="Tally Aero" />
 
@@ -42,6 +48,7 @@
   </head>
   <body>
     <div id="root"></div>
+
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

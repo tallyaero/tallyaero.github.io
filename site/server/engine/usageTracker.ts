@@ -11,6 +11,7 @@ const PRICING = {
 } as const;
 
 const FREE_TIER_CAP_CENTS = 100; // $1.00/day
+const PAID_TIER_MSG_CAP = 100;  // soft cap: 100 messages/day for abuse prevention
 
 export interface UsageRecord {
   inputTokens: number;
@@ -31,7 +32,8 @@ export function calculateCostCents(model: string, inputTokens: number, outputTok
 
 export function isOverDailyCap(usage: UsageRecord | null, tier: string): boolean {
   if (!usage) return false;
-  if (tier === 'verified' || tier === 'paid') return false;
+  if (tier === 'verified') return false;
+  if (tier === 'paid') return usage.messageCount >= PAID_TIER_MSG_CAP;
   return usage.estimatedCostCents >= FREE_TIER_CAP_CENTS;
 }
 

@@ -94,13 +94,20 @@ export async function verifyUser(
   const status = isCFI ? 'verified_cfi' as const : 'verified_student' as const;
   const tier = 'verified';
 
-  await updateDoc(doc(db, 'users', uid), {
+  const updates: Record<string, unknown> = {
     verificationStatus: status,
     tier,
     certificateLevel: getPilotCertLevel(airman),
     verifiedAt: new Date().toISOString(),
     faaRegistryId: airman.uniqueId,
-  });
+  };
+
+  // Generate referral code for CFIs
+  if (isCFI) {
+    updates.referralCode = Math.random().toString(36).slice(2, 8).toUpperCase();
+  }
+
+  await updateDoc(doc(db, 'users', uid), updates);
 
   return status;
 }

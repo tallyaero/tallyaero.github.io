@@ -1,0 +1,23 @@
+{
+  "name": "DashTwo — AI Aviation Wingman",
+  "short_name": "DashTwo",
+  "description": "AI aviation assistant powered by 515K+ FAA documents with source citations.",
+  "start_url": "/dashtwo",
+  "display": "standalone",
+  "background_color": "#1a202c",
+  "theme_color": "#1a202c",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/dashtwo-icon.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/dashtwo-logo.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

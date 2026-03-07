@@ -38,9 +38,12 @@ export function TallyNav({ collapsed, onToggle, onClose }: TallyNavProps) {
           <NavLink to="/dashtwo" className="flex flex-col min-w-0" onClick={onClose}>
             <div className="flex items-center gap-2">
               <img src="/dashtwo-icon.png" alt="DashTwo" className="h-8 w-8 object-contain" />
-              <span className="text-lg font-bold text-white tracking-tight">DashTwo</span>
+              <span className="text-lg font-bold tracking-tight"><span className="text-aero-blue-light">Dash</span><span className="text-aero-orange">Two</span></span>
             </div>
-            <span className="text-[10px] text-aero-dark-400 ml-8">powered by <span className="text-aero-blue">Tally</span><span className="text-aero-orange">Aero</span></span>
+            <div className="ml-8 flex items-center gap-1">
+              <span className="text-[10px] text-aero-dark-500">powered by</span>
+              <span className="text-[10px] text-aero-text-muted font-medium">TallyAero</span>
+            </div>
           </NavLink>
           <div className="flex items-center gap-1">
             {onClose && (
