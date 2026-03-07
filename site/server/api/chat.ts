@@ -8,14 +8,16 @@
 
 import type { Request, Response } from 'express';
 import Anthropic from '@anthropic-ai/sdk';
-import { embedQuery } from '../engine/embeddingClient';
-import { searchFAA, type QdrantSearchResult } from '../engine/qdrantClient';
-import { routeToModel, MODEL_IDS, type DashTwoMode } from '../engine/modelRouter';
+// Shared engine from dashtwo submodule
+import { embedQuery } from '../../../packages/dashtwo/src/engine/embeddingClient';
+import { searchFAA, type QdrantSearchResult } from '../../../packages/dashtwo/src/engine/qdrantClient';
+import { routeToModel, MODEL_IDS, type DashTwoMode } from '../../../packages/dashtwo/src/engine/modelRouter';
+import { augmentQuery } from '../../../packages/dashtwo/src/engine/queryAugmenter';
+import { buildQdrantFilter } from '../../../packages/dashtwo/src/engine/metadataFilter';
+import { detectMode } from '../../../packages/dashtwo/src/engine/modeDetector';
+import { extractCitationsFromQdrant } from '../../../packages/dashtwo/src/engine/citationExtractor';
+// DashTwoLaunch-specific (public self-awareness layer, Firebase, rate limiting, usage)
 import { buildPublicSystemPrompt, RAG_RETRIEVAL_INSTRUCTIONS } from '../engine/systemPrompts';
-import { augmentQuery } from '../engine/queryAugmenter';
-import { buildQdrantFilter } from '../engine/metadataFilter';
-import { detectMode } from '../engine/modeDetector';
-import { extractCitationsFromQdrant } from '../engine/citationExtractor';
 import { calculateCostCents, isOverDailyCap, getDateKey, type UsageRecord } from '../engine/usageTracker';
 import { adminAuth, adminDb } from '../engine/firebaseAdmin';
 import { checkRateLimit } from '../engine/rateLimiter';
