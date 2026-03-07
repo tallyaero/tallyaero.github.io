@@ -58,7 +58,7 @@ export function LoadingLogo({ size = 64, className = '' }: LoadingLogoProps) {
 
       {/* Full logo fades in after swooshes draw */}
       <img
-        src="/dashtwo-icon.jpg"
+        src="/dashtwo-icon.png"
         alt=""
         className="absolute inset-0 w-full h-full object-contain animate-logo-reveal"
       />

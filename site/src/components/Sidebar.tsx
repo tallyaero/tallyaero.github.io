@@ -20,7 +20,7 @@ export function Sidebar({ onClose }: SidebarProps) {
       {/* Header */}
       <div className="flex items-center justify-between p-4 border-b border-surface-600">
         <div className="flex items-center gap-2">
-          <img src="/dashtwo-icon.jpg" alt="DashTwo" className="h-7 w-7 object-contain" />
+          <img src="/dashtwo-icon.png" alt="DashTwo" className="h-7 w-7 object-contain" />
           <span className="text-brand-400 font-bold text-lg">DashTwo</span>
           <span className="text-xs text-gray-500 bg-surface-700 px-1.5 py-0.5 rounded">BETA</span>
         </div>

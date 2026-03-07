@@ -66,7 +66,7 @@ export function LandingPage({ config }: LandingPageProps) {
         {config.dashtwoPrompt && (
           <section className="mb-16 text-center">
             <div className="bg-gradient-to-r from-base to-panel rounded-2xl p-8 border border-edge">
-              <img src="/dashtwo-icon.jpg" alt="DashTwo" className="h-12 w-12 mx-auto mb-3 object-contain" />
+              <img src="/dashtwo-icon.png" alt="DashTwo" className="h-12 w-12 mx-auto mb-3 object-contain" />
               <h3 className="text-lg font-semibold text-heading mb-2">Try DashTwo Now</h3>
               <p className="text-sm text-muted mb-4">DashTwo is live — ask it anything about aviation.</p>
               <button

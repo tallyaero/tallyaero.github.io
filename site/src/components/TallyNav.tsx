@@ -22,7 +22,7 @@ export function TallyNav({ collapsed, onToggle, onClose }: TallyNavProps) {
       {/* Header — DashTwo branding */}
       {collapsed ? (
         <div className="flex flex-col items-center gap-1 py-3 border-b border-aero-dark-600">
-          <img src="/dashtwo-icon.jpg" alt="DashTwo" className="h-7 w-7 object-contain" />
+          <img src="/dashtwo-icon.png" alt="DashTwo" className="h-7 w-7 object-contain" />
           <button
             onClick={onToggle}
             className="p-1 rounded-lg text-aero-text-subtle hover:text-white hover:bg-aero-dark-700 transition-colors"
@@ -37,7 +37,7 @@ export function TallyNav({ collapsed, onToggle, onClose }: TallyNavProps) {
         <div className="flex items-center justify-between px-4 py-3 border-b border-aero-dark-600">
           <NavLink to="/dashtwo" className="flex flex-col min-w-0" onClick={onClose}>
             <div className="flex items-center gap-2">
-              <img src="/dashtwo-icon.jpg" alt="DashTwo" className="h-6 w-6 object-contain" />
+              <img src="/dashtwo-icon.png" alt="DashTwo" className="h-6 w-6 object-contain" />
               <span className="text-lg font-bold text-white tracking-tight">DashTwo</span>
             </div>
             <span className="text-[10px] text-aero-dark-400 ml-8">powered by <span className="text-aero-blue">Tally</span><span className="text-aero-orange">Aero</span></span>
