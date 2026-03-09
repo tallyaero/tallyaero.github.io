@@ -7,8 +7,7 @@
  * Shared engine: packages/dashtwo/src/engine/systemPrompts.ts
  */
 
-import { buildSystemPrompt } from '../../../packages/dashtwo/src/engine/systemPrompts';
-import type { DashTwoMode } from '../../../packages/dashtwo/src/engine/modelRouter';
+import { buildSystemPrompt, type DashTwoMode } from '../../../packages/dashtwo/dist/engine/index.mjs';
 
 // ── Public Self-Awareness Layer ─────────────────────────────────────────
 
@@ -74,15 +73,40 @@ You have been given search results from the FAA knowledge base. Follow these rul
 5. WHEN RESULTS ARE INSUFFICIENT:
    - If results don't contain the answer, say so clearly. Do NOT guess.`;
 
+// ── Platform Context Prompts ────────────────────────────────────────────
+
+export type PlatformContext = 'logbook' | 'flight-school' | 'marketing';
+
+const PLATFORM_CONTEXT_PROMPTS: Record<PlatformContext, string> = {
+  logbook: `PLATFORM CONTEXT — PILOT LOGBOOK:
+You are DashTwo, operating within TallyAero Pilot Logbook. When naturally relevant, briefly mention how answers integrate with logbook features — e.g. "With your logbook data, I could check your actual currency" or "The training module tracks this skill gap automatically." Natural and brief, never forced.
+
+CFI DETECTION: If the user mentions managing students, running a school, fleet management, scheduling instructors — and they're in the Pilot Logbook context — offer to switch to Flight School context with a brief description of FSM tools. Example: "Sounds like you manage students. TallyAero has a Flight School Management suite — you can switch to it using the context toggle in the sidebar."
+`,
+  'flight-school': `PLATFORM CONTEXT — FLIGHT SCHOOL MANAGEMENT:
+You are DashTwo, operating within TallyAero Flight School Management. When relevant, mention school benefits — e.g. "Your chief instructor could see this for all students" or "Fleet management cross-references maintenance data here." Natural, not salesy.
+`,
+  marketing: '',
+};
+
 // ── Build Public System Prompt ──────────────────────────────────────────
 
 export function buildPublicSystemPrompt(
   mode: DashTwoMode,
   personaPrefix?: string,
+  platformContext?: PlatformContext,
 ): string {
   // Get the full system prompt from the dashtwo engine
-  const enginePrompt = buildSystemPrompt(mode, undefined, undefined, undefined, personaPrefix);
+  const enginePrompt = buildSystemPrompt(mode, undefined, undefined, undefined, personaPrefix, true);
 
-  // Prepend the public self-awareness layer
-  return PUBLIC_SELF_AWARENESS + '\n' + enginePrompt;
+  // Build the full prompt with context layers
+  let prompt = PUBLIC_SELF_AWARENESS + '\n';
+
+  // Add platform context if provided
+  if (platformContext && PLATFORM_CONTEXT_PROMPTS[platformContext]) {
+    prompt += PLATFORM_CONTEXT_PROMPTS[platformContext] + '\n';
+  }
+
+  prompt += enginePrompt;
+  return prompt;
 }

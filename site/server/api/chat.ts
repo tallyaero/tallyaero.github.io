@@ -8,16 +8,21 @@
 
 import type { Request, Response } from 'express';
 import Anthropic from '@anthropic-ai/sdk';
-// Shared engine from dashtwo submodule
-import { embedQuery } from '../../../packages/dashtwo/src/engine/embeddingClient';
-import { searchFAA, type QdrantSearchResult } from '../../../packages/dashtwo/src/engine/qdrantClient';
-import { routeToModel, MODEL_IDS, type DashTwoMode } from '../../../packages/dashtwo/src/engine/modelRouter';
-import { augmentQuery } from '../../../packages/dashtwo/src/engine/queryAugmenter';
-import { buildQdrantFilter } from '../../../packages/dashtwo/src/engine/metadataFilter';
-import { detectMode } from '../../../packages/dashtwo/src/engine/modeDetector';
-import { extractCitationsFromQdrant } from '../../../packages/dashtwo/src/engine/citationExtractor';
+// Shared engine from dashtwo package (built dist)
+import {
+  embedQuery,
+  searchFAA,
+  type QdrantSearchResult,
+  routeToModel,
+  MODEL_IDS,
+  type DashTwoMode,
+  augmentQuery,
+  buildQdrantFilter,
+  detectMode,
+  extractCitationsFromQdrant,
+} from '../../../packages/dashtwo/dist/engine/index.mjs';
 // DashTwoLaunch-specific (public self-awareness layer, Firebase, rate limiting, usage)
-import { buildPublicSystemPrompt, RAG_RETRIEVAL_INSTRUCTIONS } from '../engine/systemPrompts';
+import { buildPublicSystemPrompt, RAG_RETRIEVAL_INSTRUCTIONS, type PlatformContext } from '../engine/systemPrompts';
 import { calculateCostCents, isOverDailyCap, getDateKey, type UsageRecord } from '../engine/usageTracker';
 import { adminAuth, adminDb } from '../engine/firebaseAdmin';
 import { checkRateLimit } from '../engine/rateLimiter';
@@ -27,6 +32,7 @@ interface ChatRequestBody {
   mode: DashTwoMode;
   personaPrefix?: string;
   conversationHistory: Array<{ role: 'user' | 'assistant'; content: string }>;
+  platformContext?: PlatformContext;
 }
 
 const VALID_MODES: DashTwoMode[] = ['auto', 'general', 'checkride', 'support', 'interview', 'training', 'debrief'];
@@ -156,10 +162,10 @@ export async function handleChat(req: Request, res: Response) {
 
   try {
     // ── Step 0: Auto Mode Detection ───────────────────────────────────
-    const detectedMode = detectMode(body.query, mode);
-    if (detectedMode && (isAutoMode || detectedMode !== mode)) {
-      mode = detectedMode;
-      sendSSE(res, { type: 'mode_switch', mode: detectedMode });
+    const detection = detectMode(body.query, mode, history);
+    if (detection && detection.suggestedMode !== mode && detection.confidence >= 0.6) {
+      mode = detection.suggestedMode;
+      sendSSE(res, { type: 'mode_switch', mode: detection.suggestedMode });
     }
 
     // ── Step 1: RAG Pipeline ────────────────────────────────────────────
@@ -180,7 +186,7 @@ export async function handleChat(req: Request, res: Response) {
     if (aborted) return;
 
     // ── Step 2: Build System Prompt ─────────────────────────────────────
-    const systemPrompt = buildPublicSystemPrompt(mode, body.personaPrefix);
+    const systemPrompt = buildPublicSystemPrompt(mode, body.personaPrefix, body.platformContext);
 
     // Build RAG context from search results
     let ragContext = '';

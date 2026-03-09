@@ -28,7 +28,7 @@ export const LANDING_PAGES: LandingPageConfig[] = [
   },
   {
     id: 'dashboard',
-    path: '/dashboard',
+    path: '/dashtwo/dashboard',
     title: 'Pilot Dashboard — Tally Aero',
     navLabel: 'Dashboard',
     icon: 'home',
@@ -48,7 +48,7 @@ export const LANDING_PAGES: LandingPageConfig[] = [
   },
   {
     id: 'logbook',
-    path: '/logbook',
+    path: '/dashtwo/logbook',
     title: 'Digital Logbook — Tally Aero',
     navLabel: 'Logbook',
     icon: 'book',
@@ -69,7 +69,7 @@ export const LANDING_PAGES: LandingPageConfig[] = [
   },
   {
     id: 'currency',
-    path: '/currency',
+    path: '/dashtwo/currency',
     title: 'Currency Tracking — Tally Aero',
     navLabel: 'Currency',
     icon: 'shield',
@@ -89,7 +89,7 @@ export const LANDING_PAGES: LandingPageConfig[] = [
   },
   {
     id: 'reports',
-    path: '/reports',
+    path: '/dashtwo/reports',
     title: 'Flight Reports — Tally Aero',
     navLabel: 'Reports',
     icon: 'chart',
@@ -108,7 +108,7 @@ export const LANDING_PAGES: LandingPageConfig[] = [
   },
   {
     id: 'training',
-    path: '/training',
+    path: '/dashtwo/training',
     title: 'Training Tools — Tally Aero',
     navLabel: 'Training',
     icon: 'academic',
@@ -135,7 +135,7 @@ export const LANDING_PAGES: LandingPageConfig[] = [
   },
   {
     id: 'pilotiq',
-    path: '/pilotiq',
+    path: '/dashtwo/pilotiq',
     title: 'PilotIQ Skill Vectors — Tally Aero',
     navLabel: 'PilotIQ',
     icon: 'brain',
@@ -155,7 +155,7 @@ export const LANDING_PAGES: LandingPageConfig[] = [
   },
   {
     id: 'career',
-    path: '/career',
+    path: '/dashtwo/career',
     title: 'Career Progression — Tally Aero',
     navLabel: 'Career',
     icon: 'briefcase',
@@ -175,7 +175,7 @@ export const LANDING_PAGES: LandingPageConfig[] = [
   },
   {
     id: 'checkride',
-    path: '/checkride',
+    path: '/dashtwo/checkride',
     title: 'Checkride Prep — Tally Aero',
     navLabel: 'Checkride',
     icon: 'clipboard',
@@ -195,7 +195,7 @@ export const LANDING_PAGES: LandingPageConfig[] = [
   },
   {
     id: 'dpe',
-    path: '/dpe',
+    path: '/dashtwo/dpe',
     title: 'DPE Portal — Tally Aero',
     navLabel: 'DPE Portal',
     icon: 'badge',
@@ -214,7 +214,7 @@ export const LANDING_PAGES: LandingPageConfig[] = [
   },
   {
     id: 'aircraft',
-    path: '/aircraft',
+    path: '/dashtwo/aircraft',
     title: 'Aircraft Profiles — Tally Aero',
     navLabel: 'Aircraft',
     icon: 'plane',
@@ -234,7 +234,7 @@ export const LANDING_PAGES: LandingPageConfig[] = [
   },
   {
     id: 'docs',
-    path: '/docs',
+    path: '/dashtwo/docs',
     title: 'Document Library — Tally Aero',
     navLabel: 'Docs',
     icon: 'folder',
@@ -254,7 +254,7 @@ export const LANDING_PAGES: LandingPageConfig[] = [
   },
   {
     id: 'safety',
-    path: '/safety',
+    path: '/dashtwo/safety',
     title: 'Safety & Risk — Tally Aero',
     navLabel: 'Safety',
     icon: 'warning',
@@ -274,7 +274,7 @@ export const LANDING_PAGES: LandingPageConfig[] = [
   },
   {
     id: 'achievements',
-    path: '/achievements',
+    path: '/dashtwo/achievements',
     title: 'Achievements — Tally Aero',
     navLabel: 'Achievements',
     icon: 'trophy',

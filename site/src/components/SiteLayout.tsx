@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
-import { TallyNav } from './TallyNav';
+import { LogbookNav } from './LogbookNav';
 import { ChatSidebar } from './ChatSidebar';
 import { AuthModal } from './AuthModal';
 import { VerificationModal } from './VerificationModal';
@@ -16,6 +16,7 @@ export function SiteLayout() {
   const navigate = useNavigate();
   const location = useLocation();
   const isDashTwo = location.pathname === '/dashtwo';
+  // Show right chat sidebar only on /dashtwo (main chat) and /settings
   const showRightSidebar = isDashTwo || location.pathname === '/settings';
   const newConversation = useChatStore(s => s.newConversation);
 
@@ -29,14 +30,14 @@ export function SiteLayout() {
         />
       )}
 
-      {/* Left sidebar */}
+      {/* Left sidebar — LogbookNav */}
       <div className={`
         fixed inset-y-0 left-0 z-30 transform transition-all duration-200
         lg:relative lg:translate-x-0
         ${navCollapsed ? 'w-14' : 'w-64'}
         ${navOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
       `}>
-        <TallyNav
+        <LogbookNav
           collapsed={navCollapsed}
           onToggle={() => setNavCollapsed(!navCollapsed)}
           onClose={() => setNavOpen(false)}

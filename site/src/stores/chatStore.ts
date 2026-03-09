@@ -3,6 +3,7 @@ import { persist } from 'zustand/middleware';
 import type { ChatMessage, Conversation, DashTwoMode, ConversationHistory, DashTwoCitation } from '@/types/chat';
 import { usePersonaStore } from './personaStore';
 import { auth } from '@/lib/firebase';
+import { getCurrentPlatformMode } from '@/contexts/PlatformContext';
 
 interface ChatState {
   // Current conversation
@@ -252,6 +253,7 @@ export const useChatStore = create<ChatState>()(
             mode: state.currentMode,
             personaPrefix: usePersonaStore.getState().getActivePromptPrefix(),
             conversationHistory: buildConversationHistory(state.messages),
+            platformContext: getCurrentPlatformMode(),
           }),
           signal: abortController.signal,
         });
@@ -403,15 +405,23 @@ export const useChatStore = create<ChatState>()(
         messages: state.messages,
         activeConversationId: state.activeConversationId,
       }),
-      merge: (persisted, current) => ({
-        ...current,
-        ...(persisted as Partial<ChatState>),
-        // Never restore transient streaming state
-        isStreaming: false,
-      
-        streamingContent: '',
-        abortController: null,
-      }),
+      merge: (persisted, current) => {
+        const p = persisted as Partial<ChatState>;
+        // Sanitize currentMode — protect against corrupted persisted state (e.g. object instead of string)
+        const validModes = ['auto', 'general', 'checkride', 'support', 'interview', 'training', 'debrief'];
+        const restoredMode = typeof p.currentMode === 'string' && validModes.includes(p.currentMode)
+          ? p.currentMode
+          : current.currentMode;
+        return {
+          ...current,
+          ...p,
+          currentMode: restoredMode,
+          // Never restore transient streaming state
+          isStreaming: false,
+          streamingContent: '',
+          abortController: null,
+        };
+      },
     }
   )
 );

@@ -1,9 +1,30 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { NavIcon } from './NavIcon';
 import { WaitlistForm } from './WaitlistForm';
 import { SocialProof } from './SocialProof';
 import type { LandingPageConfig } from '@/types/landing';
+import {
+  IconGauge, IconBook2, IconHourglass, IconChartDots3, IconCertificate2,
+  IconBrain, IconStairsUp, IconClipboardCheck, IconMedal, IconPropeller,
+  IconFolder, IconAlertOctagon, IconMessageCircle,
+} from '@tabler/icons-react';
+
+const ICON_MAP: Record<string, React.ComponentType<{ size?: number; className?: string }>> = {
+  chat: IconMessageCircle,
+  home: IconGauge,
+  book: IconBook2,
+  shield: IconHourglass,
+  chart: IconChartDots3,
+  academic: IconCertificate2,
+  brain: IconBrain,
+  briefcase: IconStairsUp,
+  clipboard: IconClipboardCheck,
+  badge: IconClipboardCheck,
+  plane: IconPropeller,
+  folder: IconFolder,
+  warning: IconAlertOctagon,
+  trophy: IconMedal,
+};
 
 interface LandingPageProps {
   config: LandingPageConfig;
@@ -29,7 +50,7 @@ export function LandingPage({ config }: LandingPageProps) {
         <section className="text-center mb-10 sm:mb-16">
           <img src="/tally-aero-logo.png" alt="Tally Aero" className="h-10 mx-auto mb-6 object-contain" />
           <div className="inline-flex items-center gap-2 mb-6">
-            <NavIcon icon={config.icon} className="w-8 h-8 text-aero-blue-light" />
+            {(() => { const Icon = ICON_MAP[config.icon] || IconMessageCircle; return <Icon size={32} className="text-aero-blue-light" />; })()}
           </div>
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-heading mb-4">
             {config.headline}
@@ -77,7 +98,7 @@ export function LandingPage({ config }: LandingPageProps) {
                 onClick={() => navigate('/dashtwo', { state: { prompt: config.dashtwoPrompt } })}
                 className="inline-flex items-center gap-2 px-6 py-3 bg-aero-blue hover:bg-aero-blue-dark text-white rounded-xl text-sm font-medium transition-colors btn-press"
               >
-                <NavIcon icon="chat" className="w-4 h-4" />
+                <IconMessageCircle size={16} />
                 {config.dashtwoPrompt}
               </button>
             </div>
