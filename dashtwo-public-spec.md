@@ -50,7 +50,7 @@ The site looks like the Tally Aero platform. Left navigation has every tab the f
 
 ### Left Navigation Tabs
 
-Each tab opens a landing page. Claude Code should read the full AeroEdge Logbook codebase to understand what each section does and generate initial descriptive content. Steven will add philosophy explanations and editorial content on top.
+Each tab opens a landing page. Claude Code should read the full tallyaero-logbook codebase to understand what each section does and generate initial descriptive content. Steven will add philosophy explanations and editorial content on top.
 
 1. **Dashboard** — The pilot's home base. Overview of career, recent activity, upcoming flights, skill status.
 2. **Logbook** — The central nervous system. Digital logbook that knows everything about every flight and connects to everything else on the platform.
@@ -370,7 +370,7 @@ The chatbot IS the conversion mechanism. A pilot who has a great 15-minute conve
 ## TECHNICAL REQUIREMENTS
 
 ### New Standalone Build
-This is NOT bolted onto the existing AeroEdge Logbook codebase. This is a new, standalone web application purpose-built for the public chatbot and website. It shares:
+This is NOT bolted onto the existing tallyaero-logbook codebase. This is a new, standalone web application purpose-built for the public chatbot and website. It shares:
 - DashTwo's system prompt and personality
 - The RAG pipeline and FAA knowledge base
 - The citation system
@@ -437,11 +437,11 @@ But it is its own application with its own hosting, auth, payment, and user mana
 
 ## CLAUDE CODE INSTRUCTIONS
 
-**Codebase location for context:** `C:\Users\12147\Desktop\10X Flight Training\Claude Code\AeroEdge Logbook`
+**Codebase location for context:** `C:\Users\12147\Desktop\10X Flight Training\Claude Code\tallyaero-logbook`
 
 **This spec location:** `C:\Users\12147\Desktop\10X Flight Training\Claude Code\DashTwo Public\dashtwo-public-spec.md`
 
-**Read the full AeroEdge codebase for context** — understand DashTwo's existing system prompt, the RAG pipeline, the citation system, the training philosophy, all platform tools, and all six mode-specific system prompts. The public DashTwo must be consistent with the existing DashTwo personality and capabilities.
+**Read the full tallyaero-logbook codebase for context** — understand DashTwo's existing system prompt, the RAG pipeline, the citation system, the training philosophy, all platform tools, and all six mode-specific system prompts. The public DashTwo must be consistent with the existing DashTwo personality and capabilities.
 
 **Important: This spec was written during a brainstorming session without direct access to the codebase. You have access to the actual code. Where the spec is vague, incomplete, or assumes something that doesn't match reality, use your knowledge of the codebase to make better decisions. Specifically:**
 

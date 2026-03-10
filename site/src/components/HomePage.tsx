@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { IconArrowRight } from '@tabler/icons-react';
 
 /* ═══════════════════════════════════════════════════════════════
@@ -14,17 +14,17 @@ export function HomePage() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#0a0e17] text-[#94a3b8] overflow-x-hidden scroll-smooth" style={{ scrollBehavior: 'smooth' }}>
+    <div className="min-h-screen bg-aero-dark-900 text-muted overflow-x-hidden scroll-smooth" style={{ scrollBehavior: 'smooth' }}>
       {/* Nav */}
-      <header className="fixed top-0 left-0 right-0 z-30 bg-[#0a0e17]/70 backdrop-blur-md border-b border-white/[0.04]">
+      <header className="fixed top-0 left-0 right-0 z-30 bg-aero-dark-900/70 backdrop-blur-md border-b border-edge/20">
         <div className="max-w-5xl mx-auto flex items-center justify-between px-6 py-3">
           <div className="flex items-center gap-2">
             <img src="/tally-aero-favicon.png" alt="TallyAero" className="h-6 w-6 object-contain" />
-            <span className="text-sm font-semibold text-white/80">TallyAero</span>
+            <span className="text-sm font-semibold text-body">TallyAero</span>
           </div>
           <button
             onClick={() => navigate('/dashtwo')}
-            className="px-4 py-1.5 text-xs font-medium text-white bg-blue-600 hover:bg-blue-500 rounded-lg transition-colors"
+            className="px-4 py-1.5 text-xs font-medium text-aero-text-light bg-aero-blue hover:bg-aero-blue-light rounded-lg transition-colors"
           >
             Try DashTwo
           </button>
@@ -34,158 +34,164 @@ export function HomePage() {
       {/* ═══ ACT 1: The hook ═══ */}
       <section className="min-h-screen flex flex-col items-center justify-center px-6 relative">
         <FadeIn delay={300}>
-          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white text-center leading-[1.1] tracking-tight">
+          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-aero-text-light text-center leading-[1.1] tracking-tight">
             If it's not in the logbook,<br />it didn't happen.
           </h1>
         </FadeIn>
         <FadeIn delay={1400}>
-          <p className="mt-6 text-lg sm:text-xl text-white/40 text-center max-w-lg">
+          <p className="mt-6 text-lg sm:text-xl text-muted text-center max-w-lg">
             Every pilot knows this. But what if the logbook knew it too?
           </p>
-        </FadeIn>
-        <FadeIn delay={2400}>
-          <div className="absolute bottom-10 left-1/2 -translate-x-1/2">
-            <div className="w-5 h-8 rounded-full border-2 border-white/15 flex justify-center pt-1.5">
-              <div className="w-1 h-2 rounded-full bg-white/25 animate-bounce" />
-            </div>
-          </div>
         </FadeIn>
       </section>
 
       {/* ═══ ACT 2: The dead logbook ═══ */}
       <section className="py-20 sm:py-32">
         <div className="max-w-4xl mx-auto px-4 sm:px-6">
-          <ScrollReveal>
-            <p className="text-center text-white/30 text-xs uppercase tracking-[0.2em] mb-8">
+          <div className="scroll-reveal">
+            <p className="text-center text-faint text-xs uppercase tracking-[0.2em] mb-8">
               Every pilot knows this view
             </p>
-          </ScrollReveal>
+          </div>
 
-          <ScrollReveal>
+          <div className="scroll-reveal">
             <LogbookTable />
-          </ScrollReveal>
+          </div>
 
-          <ScrollReveal>
-            <p className="text-center text-white/40 text-sm mt-8">
+          <div className="scroll-reveal">
+            <p className="text-center text-muted text-sm mt-8">
               Rows. Numbers. Proof it happened. Nothing more.
             </p>
-          </ScrollReveal>
+          </div>
         </div>
       </section>
 
       {/* ═══ ACT 3: The turn ═══ */}
       <section className="min-h-[60vh] flex items-center justify-center px-6">
-        <ScrollReveal>
+        <div className="scroll-reveal">
           <div className="text-center">
-            <div className="w-12 h-px bg-blue-500/30 mx-auto mb-8" />
-            <p className="text-3xl sm:text-4xl md:text-5xl font-bold text-white tracking-tight">
+            <div className="w-12 h-px bg-aero-blue/30 mx-auto mb-8" />
+            <p className="text-3xl sm:text-4xl md:text-5xl font-bold text-aero-text-light tracking-tight">
               What if the rows could think?
             </p>
-            <div className="w-12 h-px bg-blue-500/30 mx-auto mt-8" />
+            <div className="w-12 h-px bg-aero-blue/30 mx-auto mt-8" />
           </div>
-        </ScrollReveal>
+        </div>
       </section>
 
       {/* ═══ ACT 4: The logbook wakes up ═══ */}
       <section className="py-20 sm:py-32">
         <div className="max-w-4xl mx-auto px-4 sm:px-6">
-          <ScrollReveal>
+          <div className="scroll-reveal">
             <LogbookAlive />
-          </ScrollReveal>
+          </div>
         </div>
       </section>
 
-      {/* ═══ ACT 5: The insights — visual, not verbal ═══ */}
+      {/* ═══ ACT 5: The platform — what the logbook does on its own ═══ */}
       <section className="py-20 sm:py-32">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 space-y-32">
 
           {/* Cross-referencing intelligence — full width */}
-          <ScrollReveal>
+          <div className="scroll-reveal">
             <div className="text-center mb-10">
-              <p className="text-xl sm:text-2xl font-semibold text-white leading-snug">
-                It cross-references everything.
+              <p className="text-xl sm:text-2xl font-semibold text-aero-text-light leading-snug">
+                Your logbook cross-references everything.
               </p>
-              <p className="text-sm text-white/50 mt-2">Your entries. The regs. The calendar. The weather. The aircraft. All at once.</p>
+              <p className="text-sm text-body mt-2">Your entries. The regs. The calendar. The weather. The aircraft. Your flight school. All at once.</p>
             </div>
             <CrossRefViz />
-          </ScrollReveal>
+          </div>
 
           {/* Trend */}
-          <ScrollReveal>
+          <div className="scroll-reveal">
             <div className="flex flex-col md:flex-row-reverse items-center gap-10 max-w-4xl mx-auto">
               <TrendViz />
               <div className="flex-1 min-w-0">
-                <p className="text-xl sm:text-2xl font-semibold text-white leading-snug">
+                <p className="text-xl sm:text-2xl font-semibold text-aero-text-light leading-snug">
                   It sees the trend, not just the hours.
                 </p>
-                <p className="text-sm text-white/50 mt-2">Improving, plateauing, or decaying.</p>
+                <p className="text-sm text-body mt-2">Improving, plateauing, or decaying. No AI required.</p>
               </div>
             </div>
-          </ScrollReveal>
+          </div>
 
-          {/* DashTwo conversation */}
-          <ScrollReveal>
-            <div className="flex flex-col md:flex-row items-start gap-10 max-w-4xl mx-auto">
-              <DashTwoConversation />
-              <div className="flex-1 min-w-0 pt-4">
-                <p className="text-xl sm:text-2xl font-semibold text-white leading-snug">
-                  When you ask, it doesn't guess.
-                </p>
-                <p className="text-sm text-white/50 mt-2">It knows your logbook. It knows the regs. It gives you <em>your</em> answer.</p>
-              </div>
-            </div>
-          </ScrollReveal>
 
         </div>
       </section>
 
-      {/* ═══ ACT 6: "We gave your logbook a voice" ═══ */}
+      {/* ═══ ACT 6: "Give your logbook a voice" — the bridge ═══ */}
       <section className="min-h-[60vh] flex items-center justify-center px-6">
-        <ScrollReveal>
+        <div className="scroll-reveal">
           <div className="text-center">
-            <p className="text-4xl sm:text-5xl md:text-6xl font-bold text-white tracking-tight">
+            <p className="text-4xl sm:text-5xl md:text-6xl font-bold text-aero-text-light tracking-tight">
               Give your logbook a voice.
             </p>
           </div>
-        </ScrollReveal>
+        </div>
       </section>
 
-      {/* ═══ ACT 7: DashTwo — live now ═══ */}
+      {/* ═══ ACT 7: DashTwo conversation — AI enters ═══ */}
+      <section className="py-20 sm:py-32">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6">
+          <div className="scroll-reveal">
+            <div className="text-center mb-10">
+              <p className="text-xl sm:text-2xl font-semibold text-aero-text-light leading-snug">
+                And when you have a question, just ask.
+              </p>
+              <p className="text-sm text-body mt-2">DashTwo reads what your logbook already knows — and answers in plain English.</p>
+            </div>
+          </div>
+          <div className="scroll-reveal">
+            <div className="flex flex-col md:flex-row items-start gap-10 max-w-4xl mx-auto">
+              <DashTwoConversation />
+              <div className="flex-1 min-w-0 pt-4">
+                <p className="text-lg font-semibold text-aero-text-light leading-snug">
+                  It doesn't guess.
+                </p>
+                <p className="text-sm text-body mt-2">Your logbook tracked the currency. The platform found the conflict. DashTwo just tells you — with the reg citation attached.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ═══ ACT 8: DashTwo — live now ═══ */}
       <section className="py-24">
         <div className="max-w-2xl mx-auto px-6 text-center">
-          <ScrollReveal>
+          <div className="scroll-reveal">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-green-500/10 text-green-400 text-xs font-semibold mb-5">
               <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
               Live now
             </div>
-            <h2 className="text-2xl sm:text-3xl font-bold text-white mb-4">
+            <h2 className="text-2xl sm:text-3xl font-bold text-aero-text-light mb-4">
               Meet DashTwo — your AI-powered wingman.
             </h2>
-            <p className="text-white/55 leading-relaxed max-w-md mx-auto mb-3">
+            <p className="text-body leading-relaxed max-w-md mx-auto mb-3">
               515K+ FAA documents. Source citations on every answer.
               Your logbook, the regs, your aircraft — connected.
               The AI wingman that makes every row count.
             </p>
-            <p className="text-white/35 text-xs mb-8">Free. No account required.</p>
+            <p className="text-faint text-xs mb-8">Free. No account required.</p>
             <button
               onClick={() => navigate('/dashtwo')}
-              className="inline-flex items-center gap-2 px-8 py-3.5 text-base font-semibold text-white bg-blue-600 hover:bg-blue-500 rounded-xl transition-colors shadow-lg shadow-blue-600/20"
+              className="inline-flex items-center gap-2 px-8 py-3.5 text-base font-semibold text-aero-text-light bg-aero-blue hover:bg-aero-blue-light rounded-xl transition-colors shadow-lg shadow-aero-blue/20"
             >
               Try DashTwo
               <IconArrowRight size={18} />
             </button>
-          </ScrollReveal>
+          </div>
         </div>
       </section>
 
       {/* ═══ Platform — whisper ═══ */}
-      <section className="border-t border-white/[0.06] py-20">
+      <section className="border-t border-edge/20 py-20">
         <div className="max-w-xl mx-auto px-6">
-          <ScrollReveal>
-            <p className="text-center text-white/25 text-xs uppercase tracking-[0.2em] mb-10">
+          <div className="scroll-reveal">
+            <p className="text-center text-faint text-xs uppercase tracking-[0.2em] mb-10">
               The logbook is just the beginning
             </p>
-          </ScrollReveal>
+          </div>
           <div className="space-y-0">
             {[
               ['Logbook', 'Understands what you logged. Not fields — meaning.'],
@@ -197,52 +203,52 @@ export function HomePage() {
               ['Aircraft', 'Your airplane. Your numbers. Not generic.'],
               ['Flight School', 'Same platform. Different view.'],
             ].map(([label, text], i) => (
-              <ScrollReveal key={label}>
-                <div className={`flex items-baseline gap-5 py-3 ${i > 0 ? 'border-t border-white/[0.05]' : ''}`}>
-                  <span className="text-[11px] font-semibold text-blue-400/60 uppercase tracking-wider w-28 shrink-0 text-right">
+              <div key={label} className="scroll-reveal">
+                <div className={`flex items-baseline gap-5 py-3 ${i > 0 ? 'border-t border-edge/20' : ''}`}>
+                  <span className="text-[11px] font-semibold text-aero-blue-light/70 uppercase tracking-wider w-28 shrink-0 text-right">
                     {label}
                   </span>
-                  <p className="text-sm text-white/45">{text}</p>
+                  <p className="text-sm text-muted">{text}</p>
                 </div>
-              </ScrollReveal>
+              </div>
             ))}
           </div>
-          <ScrollReveal>
-            <p className="text-center text-white/25 text-xs mt-8">
+          <div className="scroll-reveal">
+            <p className="text-center text-faint text-xs mt-8">
               Platform in development. DashTwo is live.
             </p>
-          </ScrollReveal>
+          </div>
         </div>
       </section>
 
       {/* ═══ Final CTA ═══ */}
       <section className="min-h-[50vh] flex items-center justify-center px-6">
-        <ScrollReveal>
+        <div className="scroll-reveal">
           <div className="text-center">
-            <p className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-3 tracking-tight">
+            <p className="text-3xl sm:text-4xl md:text-5xl font-bold text-aero-text-light mb-3 tracking-tight">
               It happened. You logged it.
             </p>
-            <p className="text-xl text-white/40 mb-10">
-              Now listen.
+            <p className="text-xl text-muted mb-10">
+              Now it knows.
             </p>
             <button
               onClick={() => navigate('/dashtwo')}
-              className="px-8 py-3.5 text-base font-semibold text-white bg-blue-600 hover:bg-blue-500 rounded-xl transition-colors shadow-lg shadow-blue-600/20"
+              className="px-8 py-3.5 text-base font-semibold text-aero-text-light bg-aero-blue hover:bg-aero-blue-light rounded-xl transition-colors shadow-lg shadow-aero-blue/20"
             >
               Try DashTwo — It's Free
             </button>
           </div>
-        </ScrollReveal>
+        </div>
       </section>
 
       {/* Footer */}
-      <footer className="border-t border-white/[0.05] py-8">
+      <footer className="border-t border-edge/20 py-8">
         <div className="max-w-4xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-2 opacity-40">
+          <div className="flex items-center gap-2 opacity-50">
             <img src="/tally-aero-favicon.png" alt="TallyAero" className="h-4 w-4 object-contain" />
-            <span className="text-xs font-semibold text-white/60">TallyAero</span>
+            <span className="text-xs font-semibold text-muted">TallyAero</span>
           </div>
-          <div className="text-[11px] text-white/25">
+          <div className="text-[11px] text-faint">
             If it's not in the logbook, it didn't happen.
           </div>
         </div>
@@ -269,7 +275,7 @@ function LogbookTable() {
     <div className="overflow-x-auto rounded-xl border border-white/[0.08] bg-[#0d1220]">
       <table className="w-full text-xs font-mono">
         <thead>
-          <tr className="border-b border-white/[0.08] text-white/35 uppercase tracking-wider">
+          <tr className="border-b border-white/[0.08] text-faint uppercase tracking-wider">
             <th className="text-left px-3 py-2.5 font-medium">Date</th>
             <th className="text-left px-3 py-2.5 font-medium">Type</th>
             <th className="text-left px-3 py-2.5 font-medium">Ident</th>
@@ -284,17 +290,17 @@ function LogbookTable() {
         </thead>
         <tbody>
           {LOGBOOK_DATA.map((row, i) => (
-            <tr key={i} className="border-b border-white/[0.04] text-white/45 hover:bg-white/[0.02] transition-colors">
+            <tr key={i} className="border-b border-white/[0.04] text-muted hover:bg-white/[0.02] transition-colors">
               <td className="px-3 py-2">{row.date}</td>
               <td className="px-3 py-2">{row.aircraft}</td>
-              <td className="px-3 py-2 text-white/35">{row.ident}</td>
+              <td className="px-3 py-2 text-faint">{row.ident}</td>
               <td className="px-3 py-2">{row.from}</td>
               <td className="px-3 py-2">{row.to}</td>
               <td className="px-3 py-2 text-right">{row.pic}</td>
-              <td className="px-3 py-2 text-right text-white/30">{row.xc || '—'}</td>
-              <td className="px-3 py-2 text-right text-white/30 hidden sm:table-cell">{row.landings}</td>
-              <td className="px-3 py-2 text-right text-white/30 hidden md:table-cell">{row.approaches || '—'}</td>
-              <td className="px-3 py-2 text-white/30 hidden lg:table-cell truncate max-w-[200px]">{row.remarks}</td>
+              <td className="px-3 py-2 text-right text-faint">{row.xc || '—'}</td>
+              <td className="px-3 py-2 text-right text-faint hidden sm:table-cell">{row.landings}</td>
+              <td className="px-3 py-2 text-right text-faint hidden md:table-cell">{row.approaches || '—'}</td>
+              <td className="px-3 py-2 text-faint hidden lg:table-cell truncate max-w-[200px]">{row.remarks}</td>
             </tr>
           ))}
         </tbody>
@@ -324,7 +330,7 @@ function LogbookAlive() {
           observer.unobserve(el);
         }
       },
-      { threshold: 0.3 }
+      { threshold: 0.7 }
     );
 
     observer.observe(el);
@@ -336,7 +342,7 @@ function LogbookAlive() {
       <div className="overflow-x-auto rounded-xl border border-white/[0.08] bg-[#0d1220]">
         <table className="w-full text-xs font-mono">
           <thead>
-            <tr className="border-b border-white/[0.08] text-white/35 uppercase tracking-wider">
+            <tr className="border-b border-white/[0.08] text-faint uppercase tracking-wider">
               <th className="text-left px-3 py-2.5 font-medium">Date</th>
               <th className="text-left px-3 py-2.5 font-medium">Type</th>
               <th className="text-left px-3 py-2.5 font-medium">Ident</th>
@@ -351,21 +357,21 @@ function LogbookAlive() {
             {LOGBOOK_DATA.map((row, i) => (
               <tr key={i} className="border-b border-white/[0.04] relative group">
                 <td className={`px-3 py-2.5 transition-colors duration-700 ${
-                  phase >= 1 && i === 0 ? 'text-white/70' : 'text-white/45'
+                  phase >= 1 && i === 0 ? 'text-body' : 'text-muted'
                 }`}>{row.date}</td>
-                <td className="px-3 py-2.5 text-white/45">{row.aircraft}</td>
+                <td className="px-3 py-2.5 text-muted">{row.aircraft}</td>
                 <td className={`px-3 py-2.5 transition-colors duration-700 ${
-                  phase >= 3 ? 'text-blue-400/70' : 'text-white/35'
+                  phase >= 3 ? 'text-blue-400' : 'text-faint'
                 }`}>{row.ident}</td>
-                <td className="px-3 py-2.5 text-white/45">{row.from}→{row.to}</td>
+                <td className="px-3 py-2.5 text-muted">{row.from}→{row.to}</td>
                 <td className={`px-3 py-2.5 text-right transition-colors duration-700 ${
-                  phase >= 2 ? 'text-white/70' : 'text-white/45'
+                  phase >= 2 ? 'text-body' : 'text-muted'
                 }`}>{row.pic}</td>
-                <td className="px-3 py-2.5 text-right text-white/30 hidden sm:table-cell">{row.landings}</td>
+                <td className="px-3 py-2.5 text-right text-faint hidden sm:table-cell">{row.landings}</td>
                 <td className={`px-3 py-2.5 text-right hidden md:table-cell transition-colors duration-700 ${
-                  phase >= 1 && row.approaches ? 'text-amber-400/80' : 'text-white/30'
+                  phase >= 1 && row.approaches ? 'text-amber-400' : 'text-faint'
                 }`}>{row.approaches || '—'}</td>
-                <td className="px-3 py-2.5 text-white/30 hidden lg:table-cell truncate max-w-[200px]">{row.remarks}</td>
+                <td className="px-3 py-2.5 text-faint hidden lg:table-cell truncate max-w-[200px]">{row.remarks}</td>
               </tr>
             ))}
           </tbody>
@@ -434,11 +440,12 @@ function CrossRefViz() {
           setTimeout(() => setPhase(3), 1500);
           setTimeout(() => setPhase(4), 2100);
           setTimeout(() => setPhase(5), 2700);
-          setTimeout(() => setPhase(6), 3400);
+          setTimeout(() => setPhase(6), 3300);
+          setTimeout(() => setPhase(7), 4000);
           observer.unobserve(el);
         }
       },
-      { threshold: 0.2 }
+      { threshold: 0.5 }
     );
     observer.observe(el);
     return () => observer.disconnect();
@@ -447,7 +454,7 @@ function CrossRefViz() {
   return (
     <div ref={ref} className="max-w-3xl mx-auto">
       {/* Source cards grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
 
         {/* 1. Logbook Entry */}
         <SourceCard
@@ -459,15 +466,15 @@ function CrossRefViz() {
         >
           <div className="space-y-1.5">
             <div className="flex items-center justify-between">
-              <span className="text-blue-400/80 font-semibold">Feb 1</span>
-              <span className="text-white/35">N737SP</span>
+              <span className="text-blue-400 font-semibold">Feb 1</span>
+              <span className="text-faint">N737SP</span>
             </div>
-            <div className="text-white/50">KPAO → KSCK</div>
+            <div className="text-muted">KPAO → KSCK</div>
             <div className="flex gap-3">
-              <span className="text-white/40">2.1 PIC</span>
-              <span className="text-white/60 font-medium">3 night ldg</span>
+              <span className="text-muted">2.1 PIC</span>
+              <span className="text-body font-medium">3 night ldg</span>
             </div>
-            <div className="text-white/30 text-[11px]">Full stop, night XC</div>
+            <div className="text-faint text-[11px]">Full stop, night XC</div>
           </div>
         </SourceCard>
 
@@ -483,7 +490,7 @@ function CrossRefViz() {
             <div className="flex items-center gap-1.5">
               <span className="text-purple-400 font-semibold">§ 61.57(b)</span>
             </div>
-            <div className="text-white/50 leading-snug">
+            <div className="text-muted leading-snug">
               3 takeoffs and landings to a full stop within preceding <span className="text-purple-300 font-medium">90 days</span> to carry passengers at night.
             </div>
           </div>
@@ -498,16 +505,16 @@ function CrossRefViz() {
           bgColor="bg-[#181208]"
         >
           <div className="space-y-1.5">
-            <div className="text-white/50">90-day window</div>
+            <div className="text-muted">90-day window</div>
             <div className="flex items-center gap-2">
-              <span className="text-white/40">Feb 1</span>
-              <span className="text-white/20">→</span>
+              <span className="text-muted">Feb 1</span>
+              <span className="text-faint">→</span>
               <span className="text-amber-400 font-semibold">May 2</span>
             </div>
-            <div className="mt-1 text-white/50">
+            <div className="mt-1 text-muted">
               Next night flight booked:
             </div>
-            <div className="text-white/60 font-medium">May 8</div>
+            <div className="text-body font-medium">May 8</div>
           </div>
         </SourceCard>
 
@@ -528,13 +535,13 @@ function CrossRefViz() {
                 { day: 'May 8', icon: '☁', color: 'text-amber-400/70', wx: 'MVFR' },
               ].map(d => (
                 <div key={d.day} className="space-y-0.5">
-                  <div className="text-[10px] text-white/35">{d.day.split(' ')[1]}</div>
+                  <div className="text-[10px] text-faint">{d.day.split(' ')[1]}</div>
                   <div className="text-sm">{d.icon}</div>
                   <div className={`text-[10px] font-mono font-medium ${d.color}`}>{d.wx}</div>
                 </div>
               ))}
             </div>
-            <div className="text-[11px] text-white/35 pt-1">TAF KPAO extended outlook</div>
+            <div className="text-[11px] text-faint pt-1">TAF KPAO extended outlook</div>
           </div>
         </SourceCard>
 
@@ -548,24 +555,56 @@ function CrossRefViz() {
         >
           <div className="space-y-1.5">
             <div className="flex items-center justify-between">
-              <span className="text-green-400/80 font-semibold">N737SP</span>
-              <span className="text-white/35">C172S</span>
+              <span className="text-green-400 font-semibold">N737SP</span>
+              <span className="text-faint">C172S</span>
             </div>
-            <div className="text-white/50">
+            <div className="text-muted">
               100-hr inspection due in
             </div>
             <div className="text-amber-400 font-medium">2.3 hrs</div>
-            <div className="text-white/40 text-[11px]">
+            <div className="text-faint text-[11px]">
               Scheduled maint: May 3–5
             </div>
           </div>
+        </SourceCard>
+
+        {/* 6. Flight School */}
+        <SourceCard
+          phase={phase}
+          showAt={6}
+          label="Flight School"
+          borderColor="border-orange-500/30"
+          bgColor="bg-[#1a1008]"
+        >
+          <div className="space-y-1.5">
+            <div className="flex items-center justify-between">
+              <span className="text-orange-400 font-semibold">N737SP</span>
+              <span className="text-faint">Fleet</span>
+            </div>
+            <div className="text-muted">
+              <span className="text-red-400">■</span> In maintenance
+            </div>
+            <div className="flex items-center justify-between">
+              <span className="text-orange-400 font-semibold">N8425F</span>
+              <span className="text-faint">Fleet</span>
+            </div>
+            <div className="text-muted">
+              <span className="text-green-400">■</span> Available
+            </div>
+            <div className="text-amber-400 text-[11px] font-medium">
+              ⚠ May 8: booking conflict
+            </div>
+          </div>
+          <Link to="/flight-school" className="block mt-2 text-[10px] text-orange-400/70 hover:text-orange-400 transition-colors">
+            Flight School Management →
+          </Link>
         </SourceCard>
       </div>
 
       {/* Connection lines — animated pulse */}
       <div
         className="flex justify-center py-3 transition-all duration-500"
-        style={{ opacity: phase >= 5 ? 1 : 0 }}
+        style={{ opacity: phase >= 6 ? 1 : 0 }}
       >
         <div className="flex items-center gap-1">
           {[0,1,2].map(i => (
@@ -573,7 +612,7 @@ function CrossRefViz() {
               key={i}
               className="w-1.5 h-1.5 rounded-full bg-blue-500/50"
               style={{
-                animation: phase >= 5 ? `pulse 1.5s ease-in-out ${i * 0.2}s infinite` : 'none',
+                animation: phase >= 6 ? `pulse 1.5s ease-in-out ${i * 0.2}s infinite` : 'none',
               }}
             />
           ))}
@@ -583,18 +622,19 @@ function CrossRefViz() {
       {/* Conclusion */}
       <div
         className="transition-all duration-700"
-        style={{ opacity: phase >= 6 ? 1 : 0, transform: phase >= 6 ? 'translateY(0)' : 'translateY(12px)' }}
+        style={{ opacity: phase >= 7 ? 1 : 0, transform: phase >= 7 ? 'translateY(0)' : 'translateY(12px)' }}
       >
         <div className="bg-[#1a0a0a] border border-red-500/25 rounded-xl px-5 py-4 max-w-xl mx-auto">
           <div className="flex items-start gap-3">
             <span className="text-red-400 text-lg mt-0.5">⚠</span>
             <div className="space-y-1">
-              <div className="text-red-400 font-semibold text-sm">3 conflicts detected</div>
-              <div className="text-red-200/70 text-sm leading-relaxed">
+              <div className="text-red-400 font-semibold text-sm">4 conflicts detected</div>
+              <div className="text-red-200 text-sm leading-relaxed">
                 Night currency lapses <span className="text-red-300 font-medium">May 2</span>.
                 Aircraft down for maintenance <span className="text-red-300 font-medium">May 3–5</span>.
                 Weather goes IFR <span className="text-red-300 font-medium">May 6–7</span>.
-                Your next night flight is <span className="text-white/70 font-medium">May 8</span>.
+                Student booked N737SP on <span className="text-red-300 font-medium">May 8</span> — aircraft unavailable.
+                Your next night flight is <span className="text-body font-medium">May 8</span>.
               </div>
               <div className="text-amber-400/90 text-sm font-medium pt-1">
                 → You need to fly night before May 2, or reschedule.
@@ -625,7 +665,7 @@ function SourceCard({ phase, showAt, label, borderColor, bgColor, children }: {
         transitionDelay: `${(showAt - 1) * 50}ms`,
       }}
     >
-      <div className="text-[10px] text-white/40 uppercase tracking-widest font-medium mb-2">{label}</div>
+      <div className="text-[10px] text-faint uppercase tracking-widest font-medium mb-2">{label}</div>
       <div className="text-xs font-mono">{children}</div>
     </div>
   );
@@ -644,7 +684,7 @@ function TrendViz() {
     if (!el) return;
     const observer = new IntersectionObserver(
       ([entry]) => { if (entry.isIntersecting) { setActive(true); observer.unobserve(el); } },
-      { threshold: 0.4 }
+      { threshold: 0.7 }
     );
     observer.observe(el);
     return () => observer.disconnect();
@@ -667,8 +707,8 @@ function TrendViz() {
   return (
     <div ref={ref} className="w-full md:w-72 shrink-0 bg-[#0d1220] border border-white/[0.08] rounded-xl p-4">
       <div className="flex justify-between items-baseline mb-3">
-        <span className="text-[11px] text-white/35 uppercase tracking-widest">Landing Proficiency</span>
-        <span className={`text-xs font-mono transition-all duration-700 ${active ? 'text-green-400/80' : 'text-white/20'}`}>
+        <span className="text-[11px] text-faint uppercase tracking-widest">Landing Proficiency</span>
+        <span className={`text-xs font-mono transition-all duration-700 ${active ? 'text-green-400' : 'text-faint'}`}>
           ↑ trending up
         </span>
       </div>
@@ -681,7 +721,7 @@ function TrendViz() {
         <path
           d={pathD}
           fill="none"
-          stroke="#3b82f6"
+          stroke="#0d59f2"
           strokeWidth={2}
           strokeLinecap="round"
           strokeLinejoin="round"
@@ -699,7 +739,7 @@ function TrendViz() {
               cx={x}
               cy={y}
               r={3}
-              fill="#3b82f6"
+              fill="#0d59f2"
               className="transition-all duration-500"
               style={{
                 opacity: active ? 0.8 : 0,
@@ -712,7 +752,7 @@ function TrendViz() {
       {/* Flight labels */}
       <div className="flex justify-between mt-1">
         {points.map((_, i) => (
-          <span key={i} className="text-[10px] text-white/25 font-mono">
+          <span key={i} className="text-[10px] text-faint font-mono">
             {i === 0 ? 'Jan' : i === points.length - 1 ? 'Now' : ''}
           </span>
         ))}
@@ -731,7 +771,7 @@ function MiniTrend({ active }: { active: boolean }) {
       <polyline
         points="2,10 8,8 14,9 20,6 26,4 30,2"
         fill="none"
-        stroke="#3b82f6"
+        stroke="#0d59f2"
         strokeWidth={1.5}
         strokeLinecap="round"
         strokeLinejoin="round"
@@ -762,7 +802,7 @@ function DashTwoConversation() {
           observer.unobserve(el);
         }
       },
-      { threshold: 0.3 }
+      { threshold: 0.7 }
     );
     observer.observe(el);
     return () => observer.disconnect();
@@ -772,25 +812,25 @@ function DashTwoConversation() {
     <div ref={ref} className="w-full md:w-80 shrink-0 bg-[#0d1220] border border-white/[0.08] rounded-xl p-4 space-y-3">
       <div className="flex items-center gap-2 mb-2">
         <img src="/dashtwo-icon.png" alt="DashTwo" className="h-4 w-4 object-contain" />
-        <span className="text-xs text-white/50 font-medium">DashTwo</span>
+        <span className="text-xs text-muted font-medium">DashTwo</span>
       </div>
 
       {/* User message */}
       <div className={`transition-all duration-500 ${phase >= 1 ? 'opacity-100' : 'opacity-0 translate-y-2'}`}>
-        <div className="bg-blue-600/15 border border-blue-500/15 rounded-lg px-3 py-2 text-sm text-white/70 ml-8">
+        <div className="bg-aero-blue/15 border border-aero-blue/15 rounded-lg px-3 py-2 text-sm text-body ml-8">
           Am I current to fly at night with passengers?
         </div>
       </div>
 
       {/* DashTwo response — contextual */}
       <div className={`transition-all duration-700 ${phase >= 2 ? 'opacity-100' : 'opacity-0 translate-y-2'}`}>
-        <div className="bg-white/[0.03] border border-white/[0.06] rounded-lg px-3 py-2.5 text-xs text-white/60 leading-relaxed space-y-2">
+        <div className="bg-white/[0.03] border border-white/[0.06] rounded-lg px-3 py-2.5 text-xs text-muted leading-relaxed space-y-2">
           <p>
             Based on your logbook, your last 3 night landings to a full stop
-            in <span className="text-blue-400/80">N737SP</span> were on <span className="text-white/80">Feb 1</span>.
+            in <span className="text-blue-400">N737SP</span> were on <span className="text-aero-text-light">Feb 1</span>.
           </p>
           <p>
-            Under <span className="text-purple-400/80">14 CFR 61.57(b)</span>,
+            Under <span className="text-purple-400">14 CFR 61.57(b)</span>,
             you need 3 takeoffs and landings to a full stop within the
             preceding 90 days.
           </p>
@@ -799,9 +839,9 @@ function DashTwoConversation() {
             May 2, you'll need to fly at least 3 night full-stops before carrying passengers.
           </p>
           <div className="flex items-center gap-2 pt-1 border-t border-white/[0.06]">
-            <span className="text-[11px] text-white/40">Sources:</span>
-            <span className="text-[11px] text-blue-400/60">§61.57(b)</span>
-            <span className="text-[11px] text-blue-400/60">Your logbook</span>
+            <span className="text-[11px] text-faint">Sources:</span>
+            <span className="text-[11px] text-blue-400/80">§61.57(b)</span>
+            <span className="text-[11px] text-blue-400/80">Your logbook</span>
           </div>
         </div>
       </div>
@@ -834,32 +874,3 @@ function FadeIn({ children, delay = 0 }: { children: ReactNode; delay?: number }
   );
 }
 
-function ScrollReveal({ children }: { children: ReactNode }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const [visible, setVisible] = useState(false);
-
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const observer = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) { setVisible(true); observer.unobserve(el); } },
-      { threshold: 0.15, rootMargin: '0px 0px -60px 0px' }
-    );
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, []);
-
-  return (
-    <div
-      ref={ref}
-      style={{
-        opacity: visible ? 1 : 0,
-        transform: visible ? 'translate3d(0,0,0)' : 'translate3d(0,20px,0)',
-        transition: 'opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1), transform 0.9s cubic-bezier(0.16, 1, 0.3, 1)',
-        willChange: visible ? 'auto' : 'transform, opacity',
-      }}
-    >
-      {children}
-    </div>
-  );
-}

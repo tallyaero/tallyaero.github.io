@@ -1,27 +1,108 @@
 @import "tailwindcss";
 
-/* ============================================
-   LOGBOOK DESIGN TOKENS — imported directly from the logbook.
-   The logbook's index.css @theme block is the single source of truth.
-   We extract just the token values we need and map them to our
-   local variable names so components don't need to change.
+/* ══════════════════════════════════════════════════════════════
+   TALLYAERO DESIGN TOKENS — aligned with tokens.css (single source of truth)
+   Source: tallyaero-school/packages/ui/src/web/tokens.css
+   ══════════════════════════════════════════════════════════════ */
 
-   When your cofounder changes a color/font in the logbook's
-   index.css @theme, update the values below to match.
+/* ── Brand Colors (immutable across themes) ───────────────── */
+:root {
+  --ta-brand-blue: #0d59f2;
+  --ta-brand-blue-light: #3B82F6;
+  --ta-brand-blue-dark: #0a47c9;
+  --ta-brand-orange: #f27b0d;
+  --ta-brand-orange-light: #f59e0b;
+  --ta-brand-orange-dark: #c2410c;
+  --ta-brand-purple: #7C3AED;
 
-   Source: AeroEdge Logbook/app/src/index.css (@theme block)
-   ============================================ */
+  /* ── Sidebar (always dark, both themes) ─────────────────── */
+  --ta-sidebar-bg: #0a0e17;
+  --ta-sidebar-hover: #161e2d;
+  --ta-sidebar-active: var(--ta-brand-blue);
+  --ta-sidebar-border: rgba(255, 255, 255, 0.1);
+  --ta-sidebar-width-collapsed: 64px;
+  --ta-sidebar-width-expanded: 240px;
 
-/* ============================================
+  /* ── Status Colors (immutable across themes) ────────────── */
+  --ta-success: #22c55e;
+  --ta-warning: #f27b0d;
+  --ta-danger: #ef4444;
+  --ta-info: #0d59f2;
+
+  /* ── Fonts ───────────────────────────────────────────────── */
+  --ta-font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --ta-font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+
+  /* ── Flight Categories (FAA standard, never change) ─────── */
+  --ta-vfr: #48bb78;
+  --ta-mvfr: #3182ce;
+  --ta-ifr: #e53e3e;
+  --ta-lifr: #D946EF;
+
+  /* ── Animation Speed ────────────────────────────────────── */
+  --ta-transition-speed: 200ms;
+  --ta-transition-fn: ease-out;
+}
+
+/* ── UI Personality Presets ────────────────────────────────── */
+:root,
+[data-personality="standard"] {
+  --ta-radius-xs: 4px;
+  --ta-radius-sm: 6px;
+  --ta-radius-md: 8px;
+  --ta-radius-lg: 10px;
+  --ta-radius-xl: 12px;
+  --ta-radius-2xl: 16px;
+  --ta-radius-full: 9999px;
+  --ta-font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  --ta-font-weight-heading: 700;
+  --ta-font-weight-body: 400;
+  --ta-font-weight-label: 600;
+  --ta-letter-spacing-heading: -0.01em;
+  --ta-transition-speed: 200ms;
+}
+
+[data-personality="sharp"] {
+  --ta-radius-xs: 0px;
+  --ta-radius-sm: 0px;
+  --ta-radius-md: 0px;
+  --ta-radius-lg: 0px;
+  --ta-radius-xl: 0px;
+  --ta-radius-2xl: 0px;
+  --ta-radius-full: 9999px;
+  --ta-font-family: 'Space Grotesk', system-ui, -apple-system, sans-serif;
+  --ta-font-weight-heading: 800;
+  --ta-font-weight-body: 500;
+  --ta-font-weight-label: 700;
+  --ta-letter-spacing-heading: -0.02em;
+  --ta-transition-speed: 100ms;
+}
+
+[data-personality="soft"] {
+  --ta-radius-xs: 8px;
+  --ta-radius-sm: 10px;
+  --ta-radius-md: 14px;
+  --ta-radius-lg: 18px;
+  --ta-radius-xl: 22px;
+  --ta-radius-2xl: 28px;
+  --ta-radius-full: 9999px;
+  --ta-font-family: 'DM Sans', system-ui, -apple-system, sans-serif;
+  --ta-font-weight-heading: 600;
+  --ta-font-weight-body: 400;
+  --ta-font-weight-label: 500;
+  --ta-letter-spacing-heading: -0.005em;
+  --ta-transition-speed: 250ms;
+}
+
+/* ══════════════════════════════════════════════════════════════
    THEME SYSTEM — semantic colors that swap light/dark
-   Values pulled from logbook's design system tokens.
-   ============================================ */
+   ══════════════════════════════════════════════════════════════ */
 
 :root {
   /* Light theme (default) — matches logbook light mode */
   --th-base: #f8fafc;         /* logbook: --color-bg-base-light */
   --th-panel: #ffffff;         /* logbook: --color-bg-surface-light */
-  --th-raised: #f1f5f9;       /* logbook: --color-bg-field-light */
+  --th-raised: #eef2f7;       /* master: --ta-surface-field */
   --th-hover: #e2e8f0;        /* logbook: --color-border-light */
   --th-active: #e2e8f0;
   --th-edge: #e2e8f0;         /* logbook: --color-border-light */
@@ -48,7 +129,7 @@
 
   /* Bridge aliases so logbook ds-* classes resolve */
   --color-bg-surface-light: #ffffff;
-  --color-bg-field-light: #f1f5f9;
+  --color-bg-field-light: #eef2f7;    /* master: --ta-surface-field */
   --color-border-light: #e2e8f0;
   --color-text-primary-light: #0f172a;
   --color-text-secondary-light: #64748b;
@@ -63,7 +144,7 @@
   --color-primary: #0d59f2;
   --color-primary-hover: rgba(13, 89, 242, 0.8);
   --color-bg-surface: #ffffff;
-  --color-bg-field: #f1f5f9;
+  --color-bg-field: #eef2f7;   /* master: --ta-surface-field */
   --color-bg-input: #ffffff;
   --color-border-dark: #e2e8f0;
   --color-text-primary-dark: #0f172a;
@@ -75,13 +156,13 @@
   /* Dark theme — matches logbook dark mode */
   --th-base: #0a0e17;         /* logbook: --color-bg-base */
   --th-panel: #161e2d;        /* logbook: --color-bg-surface */
-  --th-raised: #1e2a3f;
-  --th-hover: #1e2a3f;
+  --th-raised: #1e293b;       /* master: --ta-surface-tertiary */
+  --th-hover: #1e293b;
   --th-active: #222f49;       /* logbook: --color-border-dark */
   --th-edge: #222f49;         /* logbook: --color-border-dark */
-  --th-input: #0e1424;        /* logbook: --color-bg-field */
+  --th-input: #111a2b;        /* master: --ta-surface-field */
   --th-heading: #f1f5f9;      /* logbook: --color-text-primary-dark */
-  --th-body: #94a3b8;         /* logbook: --color-text-secondary-dark */
+  --th-body: #cbd5e1;         /* master: --ta-text-secondary (dark) */
   --th-muted: #94a3b8;
   --th-faint: #64748b;        /* logbook: --color-text-muted-dark */
   --th-user-bubble: #161e2d;
@@ -151,7 +232,7 @@
   /* Dark palette — matches logbook dark surfaces */
   --color-aero-dark-900: #0a0e17;
   --color-aero-dark-800: #161e2d;
-  --color-aero-dark-700: #1e2a3f;
+  --color-aero-dark-700: #1e293b;
   --color-aero-dark-600: #222f49;
   --color-aero-dark-500: #2d3f5c;
   --color-aero-dark-400: #4a5f80;
@@ -164,9 +245,17 @@
   --color-warning: #f27b0d;
   --color-danger: #ef4444;
 
-  /* Fonts — matches logbook */
-  --font-sans: 'Space Grotesk', sans-serif;
+  /* Fonts — personality-driven via --ta-font-family */
+  --font-sans: var(--ta-font-family, 'Inter', system-ui, -apple-system, sans-serif);
   --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+
+  /* Radius — personality-driven via --ta-radius-* */
+  --radius-xs: var(--ta-radius-xs);
+  --radius-sm: var(--ta-radius-sm);
+  --radius-md: var(--ta-radius-md);
+  --radius-lg: var(--ta-radius-lg);
+  --radius-xl: var(--ta-radius-xl);
+  --radius-2xl: var(--ta-radius-2xl);
 }
 
 html {
@@ -200,13 +289,13 @@ body {
   :root:not([data-theme]) {
     --th-base: #0a0e17;
     --th-panel: #161e2d;
-    --th-raised: #1e2a3f;
-    --th-hover: #1e2a3f;
+    --th-raised: #1e293b;
+    --th-hover: #1e293b;
     --th-active: #222f49;
     --th-edge: #222f49;
-    --th-input: #0e1424;
+    --th-input: #111a2b;
     --th-heading: #f1f5f9;
-    --th-body: #94a3b8;
+    --th-body: #cbd5e1;
     --th-muted: #94a3b8;
     --th-faint: #64748b;
     --th-user-bubble: #161e2d;
@@ -812,6 +901,38 @@ input[type="checkbox"].toggle-pill + *,
 @supports (padding-bottom: env(safe-area-inset-bottom)) {
   .safe-bottom {
     padding-bottom: env(safe-area-inset-bottom);
+  }
+}
+
+/* ============================================
+   CSS SCROLL-DRIVEN REVEAL ANIMATIONS
+   Runs on compositor thread — no JS, no jank.
+   ============================================ */
+
+@keyframes scroll-reveal-in {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 20px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@supports (animation-timeline: view()) {
+  .scroll-reveal {
+    animation: scroll-reveal-in linear both;
+    animation-timeline: view();
+    animation-range: entry 60% entry 90%;
+  }
+}
+
+/* Fallback: browsers without scroll-driven animations just show content */
+@supports not (animation-timeline: view()) {
+  .scroll-reveal {
+    opacity: 1;
+    transform: none;
   }
 }
 

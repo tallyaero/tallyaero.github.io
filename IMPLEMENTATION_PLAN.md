@@ -11,7 +11,7 @@
 
 ### 1.1 System Prompt Architecture (Actual Implementation)
 
-The DashTwo engine lives in `packages/dashtwo/` as a standalone TypeScript package (`@aeroedge/dashtwo`). The architecture is clean and well-separated:
+The DashTwo engine lives in `packages/dashtwo/` as a standalone TypeScript package (`@tallyaero/dashtwo`). The architecture is clean and well-separated:
 
 ```
 packages/dashtwo/src/
@@ -160,7 +160,7 @@ Citations flow: Qdrant results → `extractCitationsFromQdrant()` → typed cita
 
 **Missing citation backfill:** After generating a response, `findMissingRefs()` scans the response text for regulation references (CFR, AIM, AC) not covered by RAG citations, then `fillMissingCitations()` does targeted Qdrant lookups to fill them. This ensures comprehensive citations even when the response synthesizes across sources.
 
-**Transfers directly to public chatbot.** The citation system is self-contained in the `@aeroedge/dashtwo` package.
+**Transfers directly to public chatbot.** The citation system is self-contained in the `@tallyaero/dashtwo` package.
 
 ### 1.7 Model Routing
 
@@ -891,13 +891,13 @@ STRIPE_WEBHOOK_SECRET=whsec_...
 - Anthropic API key: server-side only, never in client bundle
 - Qdrant: read-only API key for the public chatbot (separate from platform write key)
 - Firebase: new project (`tallyaero-public`) separate from the platform project
-- No platform codebase exposure — the public site is a NEW build that imports from `@aeroedge/dashtwo` package
+- No platform codebase exposure — the public site is a NEW build that imports from `@tallyaero/dashtwo` package
 
 ### 12.4 Sharing the DashTwo Package
 
 The `packages/dashtwo/` package is already framework-agnostic (no Firebase, no React dependencies in the engine). For the public site:
 
-**Option A:** Publish `@aeroedge/dashtwo` to a private npm registry and import it
+**Option A:** Publish `@tallyaero/dashtwo` to a private npm registry and import it
 **Option B:** Use the package directly via npm workspace/monorepo link
 **Option C:** Extract the engine files into the new project
 
@@ -913,7 +913,7 @@ The `packages/dashtwo/` package is already framework-agnostic (no Firebase, no R
 - [ ] New repo setup: React + TypeScript + Vite + Tailwind + Zustand
 - [ ] Vercel project configuration
 - [ ] Firebase project setup (auth, Firestore)
-- [ ] Publish `@aeroedge/dashtwo` engine to private registry
+- [ ] Publish `@tallyaero/dashtwo` engine to private registry
 - [ ] Backend streaming endpoint: `/api/chat` with SSE
 - [ ] Integrate: system prompts, RAG pipeline, citation extraction
 - [ ] Basic chat UI: message list, input box, streaming text display
@@ -991,7 +991,7 @@ The `packages/dashtwo/` package is already framework-agnostic (no Firebase, no R
 
 1. **Domain:** ~~What's the production domain?~~ **RESOLVED** — `tallyaero.com/dashtwo` (sub-path of Tally Aero website, serving as a funnel to the full platform)
 
-2. **Package sharing strategy:** Publish `@aeroedge/dashtwo` to private npm, or monorepo with the new site? Private npm is cleaner but adds a dependency management step.
+2. **Package sharing strategy:** Publish `@tallyaero/dashtwo` to private npm, or monorepo with the new site? Private npm is cleaner but adds a dependency management step.
 
 3. **Qdrant access:** Create a read-only API key for the public chatbot? Or use the same key with collection-level permissions?
 
@@ -1036,7 +1036,7 @@ The `packages/dashtwo/` package is already framework-agnostic (no Firebase, no R
 
 ## SUMMARY
 
-The codebase is in excellent shape for this project. The `@aeroedge/dashtwo` package is already framework-agnostic and contains everything needed: system prompts for 8 modes, 9 personas with prompt prefixes, complete RAG pipeline (Voyage AI → Qdrant → citation extraction), model routing, anti-hallucination pipeline, and follow-up detection.
+The codebase is in excellent shape for this project. The `@tallyaero/dashtwo` package is already framework-agnostic and contains everything needed: system prompts for 8 modes, 9 personas with prompt prefixes, complete RAG pipeline (Voyage AI → Qdrant → citation extraction), model routing, anti-hallucination pipeline, and follow-up detection.
 
 **What transfers directly (zero adaptation):**
 - All system prompts (990 lines)

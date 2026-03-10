@@ -1,6 +1,6 @@
 /**
  * Firebase Client SDK initialization
- * Uses the aeroedge-logbook project (shared with platform for dev)
+ * Uses the aeroedge-logbook Firebase project (infrastructure ID unchanged per rename)
  * TODO: Switch to tallyaero-public project for production
  */
 
