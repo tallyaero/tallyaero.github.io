@@ -19,7 +19,12 @@ dotenv.config();
 const app = express();
 const PORT = process.env.API_PORT || 3001;
 
-app.use(cors());
+// In dev, allow localhost origins. In production (Vercel), CORS is handled by the platform.
+app.use(cors({
+  origin: process.env.NODE_ENV === 'production'
+    ? ['https://tallyaero.com', 'https://www.tallyaero.com']
+    : [/^http:\/\/localhost:\d+$/, /^http:\/\/127\.0\.0\.1:\d+$/],
+}));
 
 // Stripe webhook needs raw body for signature verification
 app.post('/api/stripe/webhook', express.raw({ type: 'application/json' }), handleWebhook);

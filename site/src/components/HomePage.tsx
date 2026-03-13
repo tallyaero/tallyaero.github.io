@@ -49,7 +49,7 @@ export function HomePage() {
       <section className="py-20 sm:py-32">
         <div className="max-w-4xl mx-auto px-4 sm:px-6">
           <div className="scroll-reveal">
-            <p className="text-center text-faint text-xs uppercase tracking-[0.2em] mb-8">
+            <p className="text-center text-muted text-sm uppercase tracking-[0.2em] mb-8">
               Every pilot knows this view
             </p>
           </div>
@@ -66,22 +66,16 @@ export function HomePage() {
         </div>
       </section>
 
-      {/* ═══ ACT 3: The turn ═══ */}
-      <section className="min-h-[60vh] flex items-center justify-center px-6">
-        <div className="scroll-reveal">
-          <div className="text-center">
-            <div className="w-12 h-px bg-aero-blue/30 mx-auto mb-8" />
-            <p className="text-3xl sm:text-4xl md:text-5xl font-bold text-aero-text-light tracking-tight">
-              What if the rows could think?
-            </p>
-            <div className="w-12 h-px bg-aero-blue/30 mx-auto mt-8" />
-          </div>
-        </div>
-      </section>
-
-      {/* ═══ ACT 4: The logbook wakes up ═══ */}
+      {/* ═══ ACT 3+4: The turn — logbook wakes up ═══ */}
       <section className="py-20 sm:py-32">
         <div className="max-w-4xl mx-auto px-4 sm:px-6">
+          <div className="scroll-reveal">
+            <div className="text-center mb-10">
+              <p className="text-xl sm:text-2xl font-semibold text-aero-text-light leading-snug">
+                What if the rows could think?
+              </p>
+            </div>
+          </div>
           <div className="scroll-reveal">
             <LogbookAlive />
           </div>
@@ -103,15 +97,15 @@ export function HomePage() {
             <CrossRefViz />
           </div>
 
-          {/* Trend */}
+          {/* Insights */}
           <div className="scroll-reveal">
             <div className="flex flex-col md:flex-row-reverse items-center gap-10 max-w-4xl mx-auto">
-              <TrendViz />
+              <InsightsViz />
               <div className="flex-1 min-w-0">
                 <p className="text-xl sm:text-2xl font-semibold text-aero-text-light leading-snug">
-                  It sees the trend, not just the hours.
+                  It reads between the entries.
                 </p>
-                <p className="text-sm text-body mt-2">Improving, plateauing, or decaying. No AI required.</p>
+                <p className="text-sm text-body mt-2">Currency gaps, stale maneuvers, lopsided experience. Your logbook connects what you've logged to what you're missing.</p>
               </div>
             </div>
           </div>
@@ -172,7 +166,7 @@ export function HomePage() {
               Your logbook, the regs, your aircraft — connected.
               The AI wingman that makes every row count.
             </p>
-            <p className="text-faint text-xs mb-8">Free. No account required.</p>
+            <p className="text-muted text-xs mb-8">Free. No account required.</p>
             <button
               onClick={() => navigate('/dashtwo')}
               className="inline-flex items-center gap-2 px-8 py-3.5 text-base font-semibold text-aero-text-light bg-aero-blue hover:bg-aero-blue-light rounded-xl transition-colors shadow-lg shadow-aero-blue/20"
@@ -188,7 +182,7 @@ export function HomePage() {
       <section className="border-t border-edge/20 py-20">
         <div className="max-w-xl mx-auto px-6">
           <div className="scroll-reveal">
-            <p className="text-center text-faint text-xs uppercase tracking-[0.2em] mb-10">
+            <p className="text-center text-muted text-sm uppercase tracking-[0.2em] mb-10">
               The logbook is just the beginning
             </p>
           </div>
@@ -205,7 +199,7 @@ export function HomePage() {
             ].map(([label, text], i) => (
               <div key={label} className="scroll-reveal">
                 <div className={`flex items-baseline gap-5 py-3 ${i > 0 ? 'border-t border-edge/20' : ''}`}>
-                  <span className="text-[11px] font-semibold text-aero-blue-light/70 uppercase tracking-wider w-28 shrink-0 text-right">
+                  <span className="text-[11px] font-semibold text-aero-blue-light uppercase tracking-wider w-28 shrink-0 text-right">
                     {label}
                   </span>
                   <p className="text-sm text-muted">{text}</p>
@@ -214,7 +208,7 @@ export function HomePage() {
             ))}
           </div>
           <div className="scroll-reveal">
-            <p className="text-center text-faint text-xs mt-8">
+            <p className="text-center text-muted text-xs mt-8">
               Platform in development. DashTwo is live.
             </p>
           </div>
@@ -244,11 +238,11 @@ export function HomePage() {
       {/* Footer */}
       <footer className="border-t border-edge/20 py-8">
         <div className="max-w-4xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-2 opacity-50">
+          <div className="flex items-center gap-2 opacity-70">
             <img src="/tally-aero-favicon.png" alt="TallyAero" className="h-4 w-4 object-contain" />
             <span className="text-xs font-semibold text-muted">TallyAero</span>
           </div>
-          <div className="text-[11px] text-faint">
+          <div className="text-[11px] text-muted">
             If it's not in the logbook, it didn't happen.
           </div>
         </div>
@@ -275,7 +269,7 @@ function LogbookTable() {
     <div className="overflow-x-auto rounded-xl border border-white/[0.08] bg-[#0d1220]">
       <table className="w-full text-xs font-mono">
         <thead>
-          <tr className="border-b border-white/[0.08] text-faint uppercase tracking-wider">
+          <tr className="border-b border-white/[0.08] text-muted uppercase tracking-wider">
             <th className="text-left px-3 py-2.5 font-medium">Date</th>
             <th className="text-left px-3 py-2.5 font-medium">Type</th>
             <th className="text-left px-3 py-2.5 font-medium">Ident</th>
@@ -290,17 +284,17 @@ function LogbookTable() {
         </thead>
         <tbody>
           {LOGBOOK_DATA.map((row, i) => (
-            <tr key={i} className="border-b border-white/[0.04] text-muted hover:bg-white/[0.02] transition-colors">
+            <tr key={i} className="border-b border-white/[0.04] text-body hover:bg-white/[0.02] transition-colors">
               <td className="px-3 py-2">{row.date}</td>
               <td className="px-3 py-2">{row.aircraft}</td>
-              <td className="px-3 py-2 text-faint">{row.ident}</td>
+              <td className="px-3 py-2 text-muted">{row.ident}</td>
               <td className="px-3 py-2">{row.from}</td>
               <td className="px-3 py-2">{row.to}</td>
               <td className="px-3 py-2 text-right">{row.pic}</td>
-              <td className="px-3 py-2 text-right text-faint">{row.xc || '—'}</td>
-              <td className="px-3 py-2 text-right text-faint hidden sm:table-cell">{row.landings}</td>
-              <td className="px-3 py-2 text-right text-faint hidden md:table-cell">{row.approaches || '—'}</td>
-              <td className="px-3 py-2 text-faint hidden lg:table-cell truncate max-w-[200px]">{row.remarks}</td>
+              <td className="px-3 py-2 text-right text-muted">{row.xc || '—'}</td>
+              <td className="px-3 py-2 text-right text-muted hidden sm:table-cell">{row.landings}</td>
+              <td className="px-3 py-2 text-right text-muted hidden md:table-cell">{row.approaches || '—'}</td>
+              <td className="px-3 py-2 text-muted hidden lg:table-cell truncate max-w-[200px]">{row.remarks}</td>
             </tr>
           ))}
         </tbody>
@@ -324,13 +318,13 @@ function LogbookAlive() {
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          setTimeout(() => setPhase(1), 400);
-          setTimeout(() => setPhase(2), 1200);
-          setTimeout(() => setPhase(3), 2000);
+          setPhase(1);
+          setTimeout(() => setPhase(2), 250);
+          setTimeout(() => setPhase(3), 500);
           observer.unobserve(el);
         }
       },
-      { threshold: 0.7 }
+      { threshold: 0.5 }
     );
 
     observer.observe(el);
@@ -342,7 +336,7 @@ function LogbookAlive() {
       <div className="overflow-x-auto rounded-xl border border-white/[0.08] bg-[#0d1220]">
         <table className="w-full text-xs font-mono">
           <thead>
-            <tr className="border-b border-white/[0.08] text-faint uppercase tracking-wider">
+            <tr className="border-b border-white/[0.08] text-muted uppercase tracking-wider">
               <th className="text-left px-3 py-2.5 font-medium">Date</th>
               <th className="text-left px-3 py-2.5 font-medium">Type</th>
               <th className="text-left px-3 py-2.5 font-medium">Ident</th>
@@ -359,19 +353,19 @@ function LogbookAlive() {
                 <td className={`px-3 py-2.5 transition-colors duration-700 ${
                   phase >= 1 && i === 0 ? 'text-body' : 'text-muted'
                 }`}>{row.date}</td>
-                <td className="px-3 py-2.5 text-muted">{row.aircraft}</td>
+                <td className="px-3 py-2.5 text-body">{row.aircraft}</td>
                 <td className={`px-3 py-2.5 transition-colors duration-700 ${
-                  phase >= 3 ? 'text-blue-400' : 'text-faint'
+                  phase >= 3 ? 'text-blue-400' : 'text-muted'
                 }`}>{row.ident}</td>
-                <td className="px-3 py-2.5 text-muted">{row.from}→{row.to}</td>
+                <td className="px-3 py-2.5 text-body">{row.from}→{row.to}</td>
                 <td className={`px-3 py-2.5 text-right transition-colors duration-700 ${
                   phase >= 2 ? 'text-body' : 'text-muted'
                 }`}>{row.pic}</td>
-                <td className="px-3 py-2.5 text-right text-faint hidden sm:table-cell">{row.landings}</td>
+                <td className="px-3 py-2.5 text-right text-muted hidden sm:table-cell">{row.landings}</td>
                 <td className={`px-3 py-2.5 text-right hidden md:table-cell transition-colors duration-700 ${
-                  phase >= 1 && row.approaches ? 'text-amber-400' : 'text-faint'
+                  phase >= 1 && row.approaches ? 'text-amber-400' : 'text-muted'
                 }`}>{row.approaches || '—'}</td>
-                <td className="px-3 py-2.5 text-faint hidden lg:table-cell truncate max-w-[200px]">{row.remarks}</td>
+                <td className="px-3 py-2.5 text-muted hidden lg:table-cell truncate max-w-[200px]">{row.remarks}</td>
               </tr>
             ))}
           </tbody>
@@ -398,23 +392,23 @@ function LogbookAlive() {
         </div>
       </div>
 
-      {/* Annotation: Trend */}
+      {/* Annotation: Recency / consistency */}
       <div className={`absolute -left-2 bottom-[60px] sm:left-2 transition-all duration-700 z-10 ${
         phase >= 2 ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-4'
       }`}>
         <div className="bg-[#0a1220] border border-blue-500/30 rounded-lg px-3 py-1.5 text-xs font-mono flex items-center gap-2 whitespace-nowrap shadow-lg shadow-black/40">
           <MiniTrend active={phase >= 2} />
-          <span className="text-blue-300">Landings trending ↑ last 6 flights</span>
+          <span className="text-blue-300">4 flights in 28 days — most active since Oct</span>
         </div>
       </div>
 
-      {/* Annotation: Reg reference */}
+      {/* Annotation: XC distance × reg cross-reference */}
       <div className={`absolute -left-2 top-[90px] sm:left-2 transition-all duration-700 z-10 ${
         phase >= 3 ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-4'
       }`}>
         <div className="bg-[#120a1a] border border-purple-500/30 rounded-lg px-3 py-1.5 text-xs font-mono whitespace-nowrap shadow-lg shadow-black/40">
           <span className="text-purple-400">§</span>
-          <span className="text-purple-300 ml-1.5">61.51(e) PIC — sole manipulator</span>
+          <span className="text-purple-300 ml-1.5">KPAO→KSCK: 58 nm — Cross Country, 14 CFR 61.1(b)(ii)</span>
         </div>
       </div>
     </div>
@@ -435,17 +429,17 @@ function CrossRefViz() {
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          setTimeout(() => setPhase(1), 300);
-          setTimeout(() => setPhase(2), 900);
-          setTimeout(() => setPhase(3), 1500);
-          setTimeout(() => setPhase(4), 2100);
-          setTimeout(() => setPhase(5), 2700);
-          setTimeout(() => setPhase(6), 3300);
-          setTimeout(() => setPhase(7), 4000);
+          setPhase(1);
+          setTimeout(() => setPhase(2), 120);
+          setTimeout(() => setPhase(3), 240);
+          setTimeout(() => setPhase(4), 360);
+          setTimeout(() => setPhase(5), 480);
+          setTimeout(() => setPhase(6), 600);
+          setTimeout(() => setPhase(7), 1000);
           observer.unobserve(el);
         }
       },
-      { threshold: 0.5 }
+      { threshold: 0.2 }
     );
     observer.observe(el);
     return () => observer.disconnect();
@@ -474,7 +468,7 @@ function CrossRefViz() {
               <span className="text-muted">2.1 PIC</span>
               <span className="text-body font-medium">3 night ldg</span>
             </div>
-            <div className="text-faint text-[11px]">Full stop, night XC</div>
+            <div className="text-muted text-[11px]">Full stop, night XC</div>
           </div>
         </SourceCard>
 
@@ -531,17 +525,17 @@ function CrossRefViz() {
               {[
                 { day: 'May 5', icon: '☀', color: 'text-yellow-400/70', wx: 'VFR' },
                 { day: 'May 6', icon: '⛈', color: 'text-red-400/80', wx: 'IFR' },
-                { day: 'May 7', icon: '🌧', color: 'text-amber-400/80', wx: 'MVFR' },
-                { day: 'May 8', icon: '☁', color: 'text-amber-400/70', wx: 'MVFR' },
+                { day: 'May 7', icon: '🌧', color: 'text-red-400/80', wx: 'IFR' },
+                { day: 'May 8', icon: '☁', color: 'text-amber-400/80', wx: 'MVFR' },
               ].map(d => (
                 <div key={d.day} className="space-y-0.5">
-                  <div className="text-[10px] text-faint">{d.day.split(' ')[1]}</div>
+                  <div className="text-[10px] text-muted">{d.day.split(' ')[1]}</div>
                   <div className="text-sm">{d.icon}</div>
                   <div className={`text-[10px] font-mono font-medium ${d.color}`}>{d.wx}</div>
                 </div>
               ))}
             </div>
-            <div className="text-[11px] text-faint pt-1">TAF KPAO extended outlook</div>
+            <div className="text-[11px] text-muted pt-1">Forecast: IFR May 6–7</div>
           </div>
         </SourceCard>
 
@@ -558,12 +552,14 @@ function CrossRefViz() {
               <span className="text-green-400 font-semibold">N737SP</span>
               <span className="text-faint">C172S</span>
             </div>
-            <div className="text-muted">
-              100-hr inspection due in
+            <div className="text-muted text-[11px]">
+              Squawk: position lights INOP
             </div>
-            <div className="text-amber-400 font-medium">2.3 hrs</div>
-            <div className="text-faint text-[11px]">
-              Scheduled maint: May 3–5
+            <div className="text-red-400 font-medium text-[11px]">
+              No night ops
+            </div>
+            <div className="text-muted text-[11px]">
+              100-hr due in <span className="text-amber-400 font-medium">2.3 hrs</span>
             </div>
           </div>
         </SourceCard>
@@ -573,55 +569,36 @@ function CrossRefViz() {
           phase={phase}
           showAt={6}
           label="Flight School"
-          borderColor="border-orange-500/30"
-          bgColor="bg-[#1a1008]"
+          borderColor="border-white/40"
+          bgColor="bg-aero-orange"
+          labelColor="text-orange-950"
+          href="/flight-school"
         >
-          <div className="space-y-1.5">
-            <div className="flex items-center justify-between">
-              <span className="text-orange-400 font-semibold">N737SP</span>
-              <span className="text-faint">Fleet</span>
+          <div className="space-y-2">
+            <div>
+              <div className="flex items-center gap-1.5">
+                <span className="inline-block w-2 h-2 rounded-full bg-green-600 ring-1 ring-white/30 shrink-0" />
+                <span className="text-orange-950 font-semibold">N8425F</span>
+              </div>
+              <div className="text-orange-950/80 text-[11px] ml-3.5">May 8 — Student training</div>
             </div>
-            <div className="text-muted">
-              <span className="text-red-400">■</span> In maintenance
-            </div>
-            <div className="flex items-center justify-between">
-              <span className="text-orange-400 font-semibold">N8425F</span>
-              <span className="text-faint">Fleet</span>
-            </div>
-            <div className="text-muted">
-              <span className="text-green-400">■</span> Available
-            </div>
-            <div className="text-amber-400 text-[11px] font-medium">
-              ⚠ May 8: booking conflict
+            <div>
+              <div className="flex items-center gap-1.5">
+                <span className="inline-block w-2 h-2 rounded-full bg-red-600 ring-1 ring-white/30 shrink-0" />
+                <span className="text-orange-950 font-semibold">N737SP</span>
+              </div>
+              <div className="text-orange-950/80 text-[11px] ml-3.5">Down — pos lights (night)</div>
             </div>
           </div>
-          <Link to="/flight-school" className="block mt-2 text-[10px] text-orange-400/70 hover:text-orange-400 transition-colors">
-            Flight School Management →
-          </Link>
+          <span className="block mt-2 text-[11px] text-white font-semibold">
+            Click to learn more →
+          </span>
         </SourceCard>
-      </div>
-
-      {/* Connection lines — animated pulse */}
-      <div
-        className="flex justify-center py-3 transition-all duration-500"
-        style={{ opacity: phase >= 6 ? 1 : 0 }}
-      >
-        <div className="flex items-center gap-1">
-          {[0,1,2].map(i => (
-            <div
-              key={i}
-              className="w-1.5 h-1.5 rounded-full bg-blue-500/50"
-              style={{
-                animation: phase >= 6 ? `pulse 1.5s ease-in-out ${i * 0.2}s infinite` : 'none',
-              }}
-            />
-          ))}
-        </div>
       </div>
 
       {/* Conclusion */}
       <div
-        className="transition-all duration-700"
+        className="mt-6 transition-all duration-700"
         style={{ opacity: phase >= 7 ? 1 : 0, transform: phase >= 7 ? 'translateY(0)' : 'translateY(12px)' }}
       >
         <div className="bg-[#1a0a0a] border border-red-500/25 rounded-xl px-5 py-4 max-w-xl mx-auto">
@@ -629,15 +606,14 @@ function CrossRefViz() {
             <span className="text-red-400 text-lg mt-0.5">⚠</span>
             <div className="space-y-1">
               <div className="text-red-400 font-semibold text-sm">4 conflicts detected</div>
-              <div className="text-red-200 text-sm leading-relaxed">
-                Night currency lapses <span className="text-red-300 font-medium">May 2</span>.
-                Aircraft down for maintenance <span className="text-red-300 font-medium">May 3–5</span>.
-                Weather goes IFR <span className="text-red-300 font-medium">May 6–7</span>.
-                Student booked N737SP on <span className="text-red-300 font-medium">May 8</span> — aircraft unavailable.
-                Your next night flight is <span className="text-body font-medium">May 8</span>.
-              </div>
-              <div className="text-amber-400/90 text-sm font-medium pt-1">
-                → You need to fly night before May 2, or reschedule.
+              <ul className="text-red-200 text-sm leading-relaxed space-y-0.5 list-none">
+                <li>Night currency lapses <span className="text-red-300 font-medium">May 2</span></li>
+                <li>N737SP position lights INOP — <span className="text-red-300 font-medium">no night ops</span></li>
+                <li>Forecast IFR <span className="text-red-300 font-medium">May 6–7</span></li>
+                <li>Student booked N737SP on <span className="text-red-300 font-medium">May 8</span></li>
+              </ul>
+              <div className="text-amber-400/90 text-sm font-medium pt-2">
+                → Fix the squawk, fly night before May 2, or reschedule.
               </div>
             </div>
           </div>
@@ -648,34 +624,50 @@ function CrossRefViz() {
 }
 
 /** Reusable animated source card */
-function SourceCard({ phase, showAt, label, borderColor, bgColor, children }: {
+function SourceCard({ phase, showAt, label, borderColor, bgColor, labelColor, href, children }: {
   phase: number;
   showAt: number;
   label: string;
   borderColor: string;
   bgColor: string;
+  labelColor?: string;
+  href?: string;
   children: ReactNode;
 }) {
-  return (
-    <div
-      className={`${bgColor} border ${borderColor} rounded-lg p-3 transition-all duration-600`}
-      style={{
-        opacity: phase >= showAt ? 1 : 0,
-        transform: phase >= showAt ? 'translateY(0) scale(1)' : 'translateY(12px) scale(0.97)',
-        transitionDelay: `${(showAt - 1) * 50}ms`,
-      }}
-    >
-      <div className="text-[10px] text-faint uppercase tracking-widest font-medium mb-2">{label}</div>
+  const content = (
+    <>
+      <div className={`text-[11px] ${labelColor || 'text-muted'} uppercase tracking-widest font-medium mb-2`}>{label}</div>
       <div className="text-xs font-mono">{children}</div>
+    </>
+  );
+
+  const classes = `${bgColor} border ${borderColor} rounded-lg p-3 transition-all duration-600 ${href ? 'cursor-pointer hover:brightness-110' : ''}`;
+  const style = {
+    opacity: phase >= showAt ? 1 : 0,
+    transform: phase >= showAt ? 'translateY(0) scale(1)' : 'translateY(12px) scale(0.97)',
+    transitionDelay: `${(showAt - 1) * 50}ms`,
+  };
+
+  if (href) {
+    return (
+      <Link to={href} className={`block ${classes}`} style={style}>
+        {content}
+      </Link>
+    );
+  }
+
+  return (
+    <div className={classes} style={style}>
+      {content}
     </div>
   );
 }
 
 /* ═══════════════════════════════════════════════════════════════
-   TREND VIZ — SVG line drawing itself
+   INSIGHTS VIZ — stacked insight nudges from a smart logbook
    ═══════════════════════════════════════════════════════════════ */
 
-function TrendViz() {
+function InsightsViz() {
   const ref = useRef<HTMLDivElement>(null);
   const [active, setActive] = useState(false);
 
@@ -684,79 +676,62 @@ function TrendViz() {
     if (!el) return;
     const observer = new IntersectionObserver(
       ([entry]) => { if (entry.isIntersecting) { setActive(true); observer.unobserve(el); } },
-      { threshold: 0.7 }
+      { threshold: 0.5 }
     );
     observer.observe(el);
     return () => observer.disconnect();
   }, []);
 
-  // Landing scores over 8 flights — improvement trend with realistic variation
-  const points = [45, 38, 52, 48, 60, 55, 68, 72];
-  const w = 240, h = 100, px = 8, py = 8;
-  const xStep = (w - px * 2) / (points.length - 1);
-  const yMin = 20, yMax = 90;
-
-  const pathD = points.map((p, i) => {
-    const x = px + i * xStep;
-    const y = h - py - ((p - yMin) / (yMax - yMin)) * (h - py * 2);
-    return `${i === 0 ? 'M' : 'L'}${x},${y}`;
-  }).join(' ');
-
-  const pathLength = 600; // approximate
+  const insights = [
+    { color: '#f59e0b', label: 'Currency', text: 'Night passenger currency expires in 12 days', icon: '○' },
+    { color: '#0d59f2', label: 'Proficiency', text: 'No short-field landings in 5 months', icon: '○' },
+    { color: '#8b5cf6', label: 'Pattern', text: '14 flights, same airport — no XC in 6 weeks', icon: '○' },
+    { color: '#10b981', label: 'Progress', text: '1.8 hrs until CPL cross-country requirement', icon: '○' },
+  ];
 
   return (
-    <div ref={ref} className="w-full md:w-72 shrink-0 bg-[#0d1220] border border-white/[0.08] rounded-xl p-4">
-      <div className="flex justify-between items-baseline mb-3">
-        <span className="text-[11px] text-faint uppercase tracking-widest">Landing Proficiency</span>
-        <span className={`text-xs font-mono transition-all duration-700 ${active ? 'text-green-400' : 'text-faint'}`}>
-          ↑ trending up
+    <div ref={ref} className="w-full md:w-80 shrink-0 bg-[#0d1220] border border-white/[0.08] rounded-xl p-4 space-y-2">
+      <div className="flex justify-between items-baseline mb-1">
+        <span className="text-[11px] text-muted uppercase tracking-widest">Logbook Insights</span>
+        <span className={`text-[10px] font-mono transition-all duration-700 ${active ? 'text-body' : 'text-faint'}`}>
+          4 items need attention
         </span>
       </div>
-      <svg viewBox={`0 0 ${w} ${h}`} className="w-full" style={{ height: 100 }}>
-        {/* Grid lines */}
-        {[0.25, 0.5, 0.75].map(f => (
-          <line key={f} x1={px} x2={w - px} y1={h * f} y2={h * f} stroke="white" strokeOpacity={0.05} />
-        ))}
-        {/* Trend line */}
-        <path
-          d={pathD}
-          fill="none"
-          stroke="#0d59f2"
-          strokeWidth={2}
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeDasharray={pathLength}
-          strokeDashoffset={active ? 0 : pathLength}
-          style={{ transition: 'stroke-dashoffset 2s ease-out', opacity: 0.8 }}
-        />
-        {/* Data points */}
-        {points.map((p, i) => {
-          const x = px + i * xStep;
-          const y = h - py - ((p - yMin) / (yMax - yMin)) * (h - py * 2);
-          return (
-            <circle
-              key={i}
-              cx={x}
-              cy={y}
-              r={3}
-              fill="#0d59f2"
-              className="transition-all duration-500"
+      {insights.map((item, i) => (
+        <div
+          key={i}
+          className="flex items-start gap-3 rounded-lg px-3 py-2.5 border transition-all duration-500"
+          style={{
+            borderColor: active ? `${item.color}33` : 'rgba(255,255,255,0.04)',
+            background: active ? `${item.color}08` : 'transparent',
+            opacity: active ? 1 : 0,
+            transform: active ? 'translateY(0)' : 'translateY(8px)',
+            transitionDelay: `${i * 200}ms`,
+          }}
+        >
+          <div
+            className="w-1.5 h-1.5 rounded-full mt-1.5 shrink-0 transition-all duration-500"
+            style={{
+              backgroundColor: item.color,
+              opacity: active ? 1 : 0,
+              transitionDelay: `${i * 200 + 300}ms`,
+            }}
+          />
+          <div className="min-w-0">
+            <span
+              className="text-[10px] uppercase tracking-widest font-medium block transition-all duration-500"
               style={{
-                opacity: active ? 0.8 : 0,
-                transitionDelay: `${1500 + i * 100}ms`,
+                color: item.color,
+                opacity: active ? 0.7 : 0,
+                transitionDelay: `${i * 200 + 100}ms`,
               }}
-            />
-          );
-        })}
-      </svg>
-      {/* Flight labels */}
-      <div className="flex justify-between mt-1">
-        {points.map((_, i) => (
-          <span key={i} className="text-[10px] text-faint font-mono">
-            {i === 0 ? 'Jan' : i === points.length - 1 ? 'Now' : ''}
-          </span>
-        ))}
-      </div>
+            >
+              {item.label}
+            </span>
+            <span className="text-xs text-aero-text-light leading-snug">{item.text}</span>
+          </div>
+        </div>
+      ))}
     </div>
   );
 }
@@ -777,7 +752,7 @@ function MiniTrend({ active }: { active: boolean }) {
         strokeLinejoin="round"
         strokeDasharray={40}
         strokeDashoffset={active ? 0 : 40}
-        style={{ transition: 'stroke-dashoffset 1s ease-out 0.5s', opacity: 0.7 }}
+        style={{ transition: 'stroke-dashoffset 0.3s ease-out', opacity: 0.7 }}
       />
     </svg>
   );

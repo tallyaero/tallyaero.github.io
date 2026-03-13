@@ -67,9 +67,9 @@ export default function App() {
             ))}
           </Route>
 
-          {/* Settings & Admin */}
-          <Route path="/settings" element={<SettingsView />} />
-          <Route path="/admin" element={<AdminPage />} />
+          {/* Settings & Admin — require auth */}
+          <Route path="/settings" element={<RequireAuth><SettingsView /></RequireAuth>} />
+          <Route path="/admin" element={<RequireAuth><AdminPage /></RequireAuth>} />
         </Route>
 
         {/* Flight School shell — placeholder for Phase 5 */}
@@ -83,6 +83,15 @@ export default function App() {
       </Routes>
     </PlatformProvider>
   );
+}
+
+/** Redirect to /dashtwo if not authenticated */
+function RequireAuth({ children }: { children: React.ReactNode }) {
+  const user = useAuthStore(s => s.user);
+  const loading = useAuthStore(s => s.loading);
+  if (loading) return null; // still initializing — don't flash redirect
+  if (!user) return <Navigate to="/dashtwo" replace />;
+  return <>{children}</>;
 }
 
 /** Minimal placeholder for flight school routes until Phase 5 */
