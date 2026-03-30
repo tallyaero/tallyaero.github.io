@@ -1,5 +1,5 @@
 /* ============================================
-   AEROEDGE WEBSITE - Main JavaScript
+   TALLYAERO WEBSITE - Main JavaScript
    ============================================ */
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -193,7 +193,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
       try {
         const response = await fetch(
-          'https://us-central1-aeroedge-logbook.cloudfunctions.net/receiveContactForm',
+          'https://us-central1-tallyaero.cloudfunctions.net/receiveContactForm',
           {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },

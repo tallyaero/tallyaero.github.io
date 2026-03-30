@@ -1,5 +1,5 @@
 /* ============================================
-   AEROEDGE WEBSITE - DESIGN SYSTEM
+   TALLYAERO WEBSITE - DESIGN SYSTEM
    Matches EM Diagram & Overlay Tool styling
    ============================================ */
 
@@ -156,7 +156,7 @@ a:hover {
 .text-muted { color: var(--text-muted); }
 .text-orange { color: var(--orange-primary); }
 
-/* Branded AEROEDGE text */
+/* Branded TALLYAERO text */
 .brand-text {
   font-weight: 700;
   text-transform: uppercase;
@@ -1744,7 +1744,7 @@ a:hover {
   border-bottom: none;
 }
 
-/* AeroEdge column - green success styling */
+/* TallyAero column - green success styling */
 .comparison-table td.yes {
   background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
   color: #155724;
