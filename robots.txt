@@ -1,5 +1,3 @@
 User-agent: *
 Allow: /
-Disallow: /videos/*.mov
-
-Sitemap: https://tallyaero.com/sitemap.xml
+Sitemap: https://tallyaero.com/sitemap-index.xml

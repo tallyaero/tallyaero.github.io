@@ -1,328 +1,76 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-9T8M646YHQ"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-9T8M646YHQ');
-  </script>
+<!DOCTYPE html><html lang="en"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>TallyAero — The Aviation Platform That Replaces Three</title><meta name="description" content="Digital pilot logbook, flight school management, AI regulatory assistant, and free DPE portal. One platform built to stop preventable aviation accidents."><link rel="canonical" href="https://tallyaero.com/"><link rel="icon" type="image/jpeg" href="/images/appicon.jpg"><!-- Open Graph --><meta property="og:type" content="website"><meta property="og:title" content="TallyAero — The Aviation Platform That Replaces Three"><meta property="og:description" content="Digital pilot logbook, flight school management, AI regulatory assistant, and free DPE portal. One platform built to stop preventable aviation accidents."><meta property="og:image" content="https://tallyaero.com/images/og-image.png"><meta property="og:url" content="https://tallyaero.com/"><meta property="og:site_name" content="TallyAero"><!-- Twitter --><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="TallyAero — The Aviation Platform That Replaces Three"><meta name="twitter:description" content="Digital pilot logbook, flight school management, AI regulatory assistant, and free DPE portal. One platform built to stop preventable aviation accidents."><meta name="twitter:image" content="https://tallyaero.com/images/og-image.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"TallyAero","url":"https://tallyaero.com","description":"Aviation platform — digital pilot logbook, flight school management, AI regulatory assistant, and free DPE portal in one system.","logo":"https://tallyaero.com/images/logo.png","foundingDate":"2025","knowsAbout":["Aviation Safety","Flight Training","Pilot Logbooks","Flight School Management","FAA Regulations","DPE Checkride Management"],"sameAs":["https://github.com/tallyaero"]}</script><!-- Fonts --><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"><!-- GA4 --><script async src="https://www.googletagmanager.com/gtag/js?id=G-9T8M646YHQ"></script><script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-9T8M646YHQ');
+</script><link rel="stylesheet" href="/_astro/flight-circle.DnoTJG3J.css"></head> <body class="bg-navy text-text-primary font-sans antialiased"> <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:bg-orange focus:text-white focus:px-3 focus:py-1.5 focus:z-[100] focus:rounded-sm focus:text-xs">
+Skip to content
+</a> <header id="site-header" class="fixed top-0 left-0 right-0 z-50 bg-navy border-b border-border transition-all duration-200"> <div class="max-w-6xl mx-auto px-4 flex items-center justify-between h-12"> <a href="/" class="flex items-center gap-2 shrink-0"> <img src="/images/logo.png" alt="TallyAero" class="h-7" loading="eager"> </a> <nav class="hidden md:flex items-center gap-5"> <a href="/" class="text-[11px] uppercase tracking-wider transition-colors text-orange font-bold"> Home </a><a href="/logbook" class="text-[11px] uppercase tracking-wider transition-colors text-text-muted hover:text-text-primary"> Logbook </a><a href="/school" class="text-[11px] uppercase tracking-wider transition-colors text-text-muted hover:text-text-primary"> School </a><a href="/dpe" class="text-[11px] uppercase tracking-wider transition-colors text-text-muted hover:text-text-primary"> DPE </a><a href="/dashtwo" class="text-[11px] uppercase tracking-wider transition-colors text-text-muted hover:text-text-primary"> DashTwo AI </a><a href="/pricing" class="text-[11px] uppercase tracking-wider transition-colors text-text-muted hover:text-text-primary"> Pricing </a><a href="/about" class="text-[11px] uppercase tracking-wider transition-colors text-text-muted hover:text-text-primary"> About </a> <a href="/demo" class="bg-orange hover:bg-orange-dark text-white text-[11px] uppercase tracking-wider font-semibold px-4 h-7 inline-flex items-center rounded-sm transition-colors">
+Get Started
+</a> </nav> <button id="mobile-toggle" class="md:hidden flex flex-col gap-[5px] p-2 -mr-2" aria-label="Menu"> <span class="block w-5 h-[1.5px] bg-text-primary transition-transform origin-center" id="bar1"></span> <span class="block w-5 h-[1.5px] bg-text-primary transition-opacity" id="bar2"></span> <span class="block w-5 h-[1.5px] bg-text-primary transition-transform origin-center" id="bar3"></span> </button> </div> <nav id="mobile-nav" class="hidden md:hidden bg-navy border-t border-border"> <div class="px-4 py-3 space-y-1"> <a href="/" class="block py-2 text-sm transition-colors text-orange font-bold"> Home </a><a href="/logbook" class="block py-2 text-sm transition-colors text-text-muted hover:text-text-primary"> Logbook </a><a href="/school" class="block py-2 text-sm transition-colors text-text-muted hover:text-text-primary"> School </a><a href="/dpe" class="block py-2 text-sm transition-colors text-text-muted hover:text-text-primary"> DPE </a><a href="/dashtwo" class="block py-2 text-sm transition-colors text-text-muted hover:text-text-primary"> DashTwo AI </a><a href="/pricing" class="block py-2 text-sm transition-colors text-text-muted hover:text-text-primary"> Pricing </a><a href="/about" class="block py-2 text-sm transition-colors text-text-muted hover:text-text-primary"> About </a> <a href="/demo" class="block mt-2 bg-orange text-white text-center text-[11px] uppercase tracking-wider font-semibold h-8 leading-8 rounded-sm">
+Get Started
+</a> </div> </nav> </header> <script>
+  (function() {
+    var header = document.getElementById('site-header');
+    var toggle = document.getElementById('mobile-toggle');
+    var nav = document.getElementById('mobile-nav');
+    var open = false;
 
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title>TallyAero | Aviation Platform</title>
-  <meta name="description" content="TallyAero - Digital pilot logbook, AI wingman, flight school management, and training tools. Built by fighter pilots.">
-
-  <!-- Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-
-  <!-- Styles -->
-  <link rel="stylesheet" href="css/styles.css">
-
-  <!-- Favicon -->
-  <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
-
-  <style>
-    /* Blackout page overrides */
-    body {
-      background-color: #0B1120;
-      color: #f7fafc;
-    }
-
-    .blackout-header {
-      padding: var(--spacing-lg) 0;
-      text-align: center;
-      background-color: var(--navy-bg);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      transition: background-color 0.3s ease, backdrop-filter 0.3s ease;
-    }
-
-    .blackout-header.scrolled {
-      background-color: rgba(11, 17, 32, 0.85);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-    }
-
-    .blackout-header .logo-wordmark {
-      font-size: 2.4rem;
-      letter-spacing: 4px;
-    }
-
-    .blackout-header .logo-tagline {
-      display: block;
-      font-size: 0.75rem;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      color: rgba(160, 174, 192, 0.6);
-      margin-top: 0.25rem;
-    }
-
-    .blackout-hero {
-      position: relative;
-      min-height: 60vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-      background-color: var(--navy-bg);
-    }
-
-    .blackout-hero-content {
-      position: relative;
-      z-index: 3;
-      text-align: center;
-      padding: var(--spacing-xl) var(--spacing-md);
-      max-width: 800px;
-    }
-
-    .blackout-hero-content h1 {
-      font-size: var(--font-size-5xl);
-      font-weight: 700;
-      color: var(--text-light);
-      margin-bottom: var(--spacing-md);
-      line-height: 1.1;
-    }
-
-    .blackout-hero-content h1 .accent {
-      color: var(--orange-primary);
-    }
-
-    .blackout-hero-content p {
-      font-size: var(--font-size-xl);
-      color: var(--text-muted);
-      max-width: 600px;
-      margin: 0 auto;
-    }
-
-    /* Products section */
-    .blackout-products {
-      padding: var(--spacing-3xl) 0;
-      background-color: var(--navy-bg);
-    }
-
-    .blackout-products-heading {
-      text-align: center;
-      margin-bottom: var(--spacing-2xl);
-    }
-
-    .blackout-products-heading h2 {
-      color: var(--text-light);
-      font-size: var(--font-size-3xl);
-      margin-bottom: var(--spacing-xs);
-    }
-
-    .blackout-products-heading p {
-      color: var(--text-muted);
-      font-size: var(--font-size-base);
-    }
-
-    .blackout-grid {
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap: var(--spacing-md);
-      max-width: var(--max-width);
-      margin: 0 auto;
-      padding: 0 var(--spacing-md);
-    }
-
-    .blackout-card {
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: var(--border-radius-lg);
-      padding: var(--spacing-xl) var(--spacing-lg);
-      text-align: center;
-      transition: all 0.3s ease;
-    }
-
-    .blackout-card:hover {
-      border-color: var(--orange-primary);
-      background: rgba(255, 255, 255, 0.05);
-      transform: translateY(-4px);
-    }
-
-    .blackout-card h3 {
-      color: var(--text-light);
-      font-size: var(--font-size-xl);
-      margin-bottom: var(--spacing-xs);
-    }
-
-    .blackout-card p {
-      color: var(--text-muted);
-      font-size: var(--font-size-sm);
-      line-height: 1.6;
-      margin: 0;
-    }
-
-    .blackout-card-icon {
-      font-size: 1.5rem;
-      margin-bottom: var(--spacing-sm);
-      opacity: 0.6;
-    }
-
-    /* Contact strip */
-    .blackout-contact {
-      padding: var(--spacing-2xl) 0;
-      text-align: center;
-      background-color: var(--navy-bg);
-      border-top: 1px solid rgba(255, 255, 255, 0.06);
-    }
-
-    .blackout-contact p {
-      color: var(--text-muted);
-      font-size: var(--font-size-sm);
-      margin: 0;
-    }
-
-    .blackout-contact a {
-      color: var(--orange-primary);
-      text-decoration: none;
-      font-weight: 500;
-    }
-
-    .blackout-contact a:hover {
-      text-decoration: underline;
-    }
-
-    .blackout-footer {
-      padding: var(--spacing-md) 0;
-      text-align: center;
-      background-color: var(--navy-bg);
-    }
-
-    .blackout-footer p {
-      color: rgba(160, 174, 192, 0.4);
-      font-size: var(--font-size-xs);
-      margin: 0;
-    }
-
-    /* Responsive */
-    @media (max-width: 1024px) {
-      .blackout-grid {
-        grid-template-columns: repeat(3, 1fr);
+    window.addEventListener('scroll', function() {
+      if (window.scrollY > 10) {
+        header.style.backgroundColor = 'rgba(11,17,32,0.9)';
+        header.style.backdropFilter = 'blur(12px)';
+      } else {
+        header.style.backgroundColor = '';
+        header.style.backdropFilter = '';
       }
-    }
+    });
 
-    @media (max-width: 768px) {
-      .blackout-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
-      .blackout-hero-content h1 {
-        font-size: 2.5rem;
-      }
-
-      .blackout-header .logo-wordmark {
-        font-size: 2rem;
-      }
-    }
-
-    @media (max-width: 480px) {
-      .blackout-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .blackout-hero-content h1 {
-        font-size: 2rem;
-      }
-    }
-  </style>
-</head>
-<body>
-
-  <!-- ============ HEADER ============ -->
-  <header class="blackout-header">
-    <img src="images/logo.png" alt="TallyAero" class="logo-img">
-    <span class="logo-tagline">Analyze &middot; Fly &middot; Master</span>
-  </header>
-
-  <!-- ============ HERO ============ -->
-  <section class="blackout-hero">
-    <div class="hero-video-container">
-      <video class="hero-video" autoplay muted loop playsinline preload="none">
-        <source src="videos/hero-bg.mp4" type="video/mp4">
-      </video>
-    </div>
-    <div class="hero-overlay"></div>
-
-    <!-- Floating gradient orbs -->
-    <div class="hero-orb" style="width:300px;height:300px;background:radial-gradient(circle,rgba(49,130,206,0.3),transparent);top:10%;left:15%;animation-delay:0s;"></div>
-    <div class="hero-orb" style="width:200px;height:200px;background:radial-gradient(circle,rgba(237,137,54,0.25),transparent);top:60%;right:10%;animation-delay:-7s;"></div>
-    <div class="hero-orb" style="width:250px;height:250px;background:radial-gradient(circle,rgba(72,187,120,0.2),transparent);bottom:10%;left:40%;animation-delay:-14s;"></div>
-
-    <div class="blackout-hero-content gs-hidden">
-      <h1 class="hero-words">Something <span class="accent">New</span> Is Taking Shape</h1>
-      <p class="hero-subtitle">TallyAero — Aviation software built by pilots, for pilots.</p>
-    </div>
-  </section>
-
-  <!-- ============ PRODUCTS ============ -->
-  <section class="blackout-products">
-    <div class="blackout-grid">
-      <div class="blackout-card tilt-card gs-hidden">
-        <div class="tilt-glare"></div>
-        <h3>Logbook</h3>
-      </div>
-
-      <div class="blackout-card tilt-card gs-hidden">
-        <div class="tilt-glare"></div>
-        <h3>DASHTWO</h3>
-      </div>
-
-      <div class="blackout-card tilt-card gs-hidden">
-        <div class="tilt-glare"></div>
-        <h3>Ecosystem</h3>
-      </div>
-
-      <div class="blackout-card tilt-card gs-hidden">
-        <div class="tilt-glare"></div>
-        <h3>School Management</h3>
-      </div>
-
-      <div class="blackout-card tilt-card gs-hidden">
-        <div class="tilt-glare"></div>
-        <h3>Training</h3>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ CONTACT ============ -->
-  <section class="blackout-contact">
-    <p>You can reach us directly at <a href="mailto:info@tallyaero.com">info@tallyaero.com</a></p>
-  </section>
-
-  <!-- ============ FOOTER ============ -->
-  <footer class="blackout-footer">
-    <p><a href="/legal.html" style="color:#E65C00;text-decoration:none;">Privacy Policy & Terms</a></p>
-    <p>&copy; 2026 TallyAero. All rights reserved.</p>
-  </footer>
-
-  <!-- GSAP -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-  <script src="js/animations.js"></script>
-
-  <script>
-    // Video background handling
-    const heroVideo = document.querySelector('.hero-video');
-    if (heroVideo) {
-      heroVideo.play().catch(function() {
-        document.addEventListener('touchstart', function playOnTouch() {
-          heroVideo.play();
-          document.removeEventListener('touchstart', playOnTouch);
-        }, { once: true });
-      });
-      heroVideo.addEventListener('error', function() {
-        this.style.display = 'none';
-      });
-    }
-  </script>
-</body>
-</html>
+    toggle.addEventListener('click', function() {
+      open = !open;
+      nav.classList.toggle('hidden', !open);
+      document.getElementById('bar1').style.transform = open ? 'rotate(45deg) translate(2px,5px)' : '';
+      document.getElementById('bar2').style.opacity = open ? '0' : '1';
+      document.getElementById('bar3').style.transform = open ? 'rotate(-45deg) translate(2px,-5px)' : '';
+    });
+  })();
+</script> <main id="main" class="pt-12">   <section data-hero class="min-h-[calc(100vh-3rem)] flex items-center bg-navy bg-grid relative"> <div class="max-w-6xl mx-auto px-4 py-12 w-full"> <div class="grid lg:grid-cols-2 gap-6 items-center"> <!-- Left: Message + Routes --> <div> <p class="text-[10px] uppercase tracking-[3px] text-text-dim mb-3">
+Logbook &middot; School Management &middot; AI Knowledge Engine
+</p> <h1 class="text-3xl md:text-4xl lg:text-[42px] font-bold leading-[1.15] mb-4">
+You're searching for<br> <span class="text-orange">something better.</span><br>
+We built it.
+</h1> <p class="text-sm text-text-muted mb-6 max-w-lg leading-relaxed">
+Check us out. Give us a call. We want to show you what happens when
+            the logbook, the school, and every regulation in aviation
+            actually talk to each other.
+</p> <!-- Four paths — pilots, schools, DPEs, AI --> <div class="grid grid-cols-2 gap-3 mb-4"> <a href="/logbook" class="group border border-border hover:border-orange/40 rounded-sm p-3 transition-colors"> <div class="text-[10px] uppercase tracking-wider text-orange mb-1 font-semibold">For Pilots</div> <div class="text-sm font-semibold text-text-primary group-hover:text-orange transition-colors">The Logbook</div> <div class="text-[10px] text-text-muted mt-1.5 leading-relaxed">Free through PPL. One-time purchase after.</div> <div class="flex flex-wrap gap-1 mt-2"> <span class="text-[7px] uppercase tracking-wider text-orange bg-orange/10 px-1 py-0.5 rounded-sm font-semibold">Tamper-proof trust chain</span> <span class="text-[7px] uppercase tracking-wider text-orange bg-orange/10 px-1 py-0.5 rounded-sm font-semibold">Military-native</span> <span class="text-[7px] uppercase tracking-wider text-orange bg-orange/10 px-1 py-0.5 rounded-sm font-semibold">Blockchain-verified</span> </div> <div class="text-[10px] uppercase tracking-wider text-orange mt-2 font-semibold">Join the Waitlist &rarr;</div> </a> <a href="/school" class="group border border-border hover:border-blue/40 rounded-sm p-3 transition-colors"> <div class="text-[10px] uppercase tracking-wider text-blue mb-1 font-semibold">For Flight Schools</div> <div class="text-sm font-semibold text-text-primary group-hover:text-blue transition-colors">School Management</div> <div class="text-[10px] text-text-muted mt-1.5 leading-relaxed">CRM. Scheduling. Billing. Dispatch. Maintenance. Compliance.</div> <div class="flex flex-wrap gap-1 mt-2"> <span class="text-[7px] uppercase tracking-wider text-blue bg-blue/10 px-1 py-0.5 rounded-sm font-semibold">Single source of truth</span> <span class="text-[7px] uppercase tracking-wider text-blue bg-blue/10 px-1 py-0.5 rounded-sm font-semibold">Predictive maintenance</span> <span class="text-[7px] uppercase tracking-wider text-blue bg-blue/10 px-1 py-0.5 rounded-sm font-semibold">Risk scoring</span> </div> <div class="text-[10px] uppercase tracking-wider text-blue mt-2 font-semibold">Schedule a Demo &rarr;</div> </a> <a href="/dpe" class="group border border-border hover:border-success/40 rounded-sm p-3 transition-colors"> <div class="text-[10px] uppercase tracking-wider text-success mb-1 font-semibold">For DPEs</div> <div class="text-sm font-semibold text-text-primary group-hover:text-success transition-colors">DPE Portal</div> <div class="text-[10px] text-text-muted mt-1.5 leading-relaxed">Checkride pipeline. Pre-validated applicants. Batch scheduling. Free.</div> <div class="flex flex-wrap gap-1 mt-2"> <span class="text-[7px] uppercase tracking-wider text-success bg-success/10 px-1 py-0.5 rounded-sm font-semibold">Verified applicant records</span> <span class="text-[7px] uppercase tracking-wider text-success bg-success/10 px-1 py-0.5 rounded-sm font-semibold">Crypto-signed endorsements</span> </div> <div class="text-[10px] uppercase tracking-wider text-success mt-2 font-semibold">Learn More &rarr;</div> </a> <a href="/dashtwo" class="group border border-orange/20 hover:border-orange/40 rounded-sm p-3 transition-colors bg-orange/[0.02]"> <div class="text-[10px] uppercase tracking-wider text-orange mb-1 font-semibold">AI Knowledge Engine</div> <div class="text-sm font-semibold text-text-primary group-hover:text-orange transition-colors">DashTwo AI</div> <div class="text-[10px] text-text-muted mt-1.5 leading-relaxed">500K+ sources. 40+ tools. Contextualized with your data.</div> <div class="flex flex-wrap gap-1 mt-2"> <span class="text-[7px] uppercase tracking-wider text-orange bg-orange/10 px-1 py-0.5 rounded-sm font-semibold">Reasoning agent</span> <span class="text-[7px] uppercase tracking-wider text-orange bg-orange/10 px-1 py-0.5 rounded-sm font-semibold">6-layer anti-hallucination</span> <span class="text-[7px] uppercase tracking-wider text-orange bg-orange/10 px-1 py-0.5 rounded-sm font-semibold">Cited FARs</span> </div> <div class="text-[10px] uppercase tracking-wider text-orange mt-2 font-semibold">See DashTwo &rarr;</div> </a> </div> <div class="flex flex-wrap gap-3"> <a href="/logbook/interest" class="bg-orange hover:bg-orange-dark text-white text-[11px] uppercase tracking-wider font-semibold px-5 h-8 inline-flex items-center rounded-sm transition-colors">
+Join the Waitlist
+</a> <a href="/compare" class="border border-border hover:border-text-muted text-text-muted hover:text-text-primary text-[11px] uppercase tracking-wider font-semibold px-5 h-8 inline-flex items-center rounded-sm transition-colors">
+Compare Solutions
+</a> </div> </div> <!-- Right: Stats / data visualization --> <div class="hidden lg:block"> <div class="border border-border rounded-sm bg-navy-mid p-4 glow-border"> <!-- Mini comparison table — immediate value prop --> <div class="mb-3 flex items-center justify-between"> <span class="text-[10px] uppercase tracking-wider text-text-dim font-semibold">Platform Comparison</span> <a href="/compare" class="text-[9px] uppercase tracking-wider text-orange hover:text-orange-dark">Full matrix &rarr;</a> </div> <table class="w-full text-[11px]"> <thead> <tr class="border-b border-border"> <th class="text-left py-1.5 text-[9px] uppercase tracking-wider text-text-dim font-semibold"></th> <th class="text-center py-1.5 px-2 text-[9px] uppercase tracking-wider text-orange font-bold">TA</th> <th class="text-center py-1.5 px-2 text-[9px] uppercase tracking-wider text-text-dim font-semibold">FSP</th><th class="text-center py-1.5 px-2 text-[9px] uppercase tracking-wider text-text-dim font-semibold">FC</th><th class="text-center py-1.5 px-2 text-[9px] uppercase tracking-wider text-text-dim font-semibold">LT</th><th class="text-center py-1.5 px-2 text-[9px] uppercase tracking-wider text-text-dim font-semibold">FF</th><th class="text-center py-1.5 px-2 text-[9px] uppercase tracking-wider text-text-dim font-semibold">MFB</th> </tr> </thead> <tbody> <tr class="border-b border-border"> <td class="py-1.5 pr-2 text-text-muted text-[11px]">Logbook + school + DPE in one system</td> <td class="text-center py-1.5 px-2 text-success font-bold">&#10003;</td> <td class="text-center py-1.5 px-2"> <span class="text-danger">&#10007;</span> </td><td class="text-center py-1.5 px-2"> <span class="text-danger">&#10007;</span> </td><td class="text-center py-1.5 px-2"> <span class="text-danger">&#10007;</span> </td><td class="text-center py-1.5 px-2"> <span class="text-danger">&#10007;</span> </td><td class="text-center py-1.5 px-2"> <span class="text-danger">&#10007;</span> </td> </tr><tr class="border-b border-border"> <td class="py-1.5 pr-2 text-text-muted text-[11px]">AI regulatory engine (500K+ sources)</td> <td class="text-center py-1.5 px-2 text-success font-bold">&#10003;</td> <td class="text-center py-1.5 px-2"> <span class="text-danger">&#10007;</span> </td><td class="text-center py-1.5 px-2"> <span class="text-danger">&#10007;</span> </td><td class="text-center py-1.5 px-2"> <span class="text-danger">&#10007;</span> </td><td class="text-center py-1.5 px-2"> <span class="text-danger">&#10007;</span> </td><td class="text-center py-1.5 px-2"> <span class="text-danger">&#10007;</span> </td> </tr><tr class="border-b border-border"> <td class="py-1.5 pr-2 text-text-muted text-[11px]">Verified trust logging</td> <td class="text-center py-1.5 px-2 text-success font-bold">&#10003;</td> <td class="text-center py-1.5 px-2"> <span class="text-danger">&#10007;</span> </td><td class="text-center py-1.5 px-2"> <span class="text-danger">&#10007;</span> </td><td class="text-center py-1.5 px-2"> <span class="text-danger">&#10007;</span> </td><td class="text-center py-1.5 px-2"> <span class="text-danger">&#10007;</span> </td><td class="text-center py-1.5 px-2"> <span class="text-danger">&#10007;</span> </td> </tr><tr class="border-b border-border"> <td class="py-1.5 pr-2 text-text-muted text-[11px]">Maintenance tracking &amp; dispatch</td> <td class="text-center py-1.5 px-2 text-success font-bold">&#10003;</td> <td class="text-center py-1.5 px-2"> <span class="text-danger">&#10007;</span> </td><td class="text-center py-1.5 px-2"> <span class="text-danger">&#10007;</span> </td><td class="text-center py-1.5 px-2"> <span class="text-danger">&#10007;</span> </td><td class="text-center py-1.5 px-2"> <span class="text-danger">&#10007;</span> </td><td class="text-center py-1.5 px-2"> <span class="text-danger">&#10007;</span> </td> </tr><tr class="border-b border-border"> <td class="py-1.5 pr-2 text-text-muted text-[11px]">Military conversion engine</td> <td class="text-center py-1.5 px-2 text-success font-bold">&#10003;</td> <td class="text-center py-1.5 px-2"> <span class="text-danger">&#10007;</span> </td><td class="text-center py-1.5 px-2"> <span class="text-danger">&#10007;</span> </td><td class="text-center py-1.5 px-2"> <span class="text-danger">&#10007;</span> </td><td class="text-center py-1.5 px-2"> <span class="text-danger">&#10007;</span> </td><td class="text-center py-1.5 px-2"> <span class="text-danger">&#10007;</span> </td> </tr> </tbody> </table> <!-- Stats bar --> <div class="grid grid-cols-3 gap-3 mt-4 pt-3 border-t border-border"> <div> <div class="text-lg font-bold text-orange">1.5M</div> <div class="text-[9px] text-text-dim uppercase tracking-wider">Data Chunks</div> </div> <div> <div class="text-lg font-bold text-orange">500K+</div> <div class="text-[9px] text-text-dim uppercase tracking-wider">Source Docs</div> </div> <div> <div class="text-lg font-bold text-orange">4</div> <div class="text-[9px] text-text-dim uppercase tracking-wider">Platforms</div> </div> </div> </div> </div> </div> </div> </section>  <section class="py-10 px-4 bg-navy border-t border-border"> <div class="max-w-4xl mx-auto"> <h2 class="text-base font-semibold mb-4">TallyAero exists to eliminate plane crashes.</h2> <div class="grid sm:grid-cols-2 gap-6"> <div class="space-y-3 text-xs text-text-muted leading-relaxed"> <p>
+After every accident, investigators pull everything together — the pilot's history, the weather,
+            the aircraft, the route, the decisions — and show exactly how it all fit together to produce that outcome.
+            The report gets written. And then it sits there.
+</p> <p> <strong class="text-orange">We do that before the crash in order to prevent it.</strong> </p> <p>
+No crash happens in isolation. But that's how aviation manages its data — in silos, disconnected, reactive.
+            No crash has a single cause. No solution will have a single fix.
+</p> <p>
+We're attacking it on every front — flight logging, training and proficiency, preflight risk identification,
+            maintenance tracking, currency monitoring — all connected, all talking to each other, all aimed at one outcome.
+</p> </div> <div> <div class="border border-orange/30 rounded-sm p-4 bg-orange/[0.02] mb-3"> <div class="text-sm font-bold text-orange mb-2">Zero crashes.</div> <p class="text-[10px] text-text-muted leading-relaxed">
+We are AI native by design — not because it's a trend, but because what we're doing is fundamentally impossible without it.
+</p> </div> <div class="grid grid-cols-2 gap-3"> <div class="border border-border rounded-sm p-3 text-center"> <div class="text-lg font-bold text-text-primary">1,097</div> <div class="text-[10px] text-text-muted">GA accidents (2023)</div> </div> <div class="border border-danger/30 rounded-sm p-3 text-center bg-danger/[0.03]"> <div class="text-lg font-bold text-danger">186</div> <div class="text-[10px] text-text-muted">Fatal</div> </div> <div class="border border-orange/30 rounded-sm p-3 text-center bg-orange/[0.03]"> <div class="text-lg font-bold text-orange">~75%</div> <div class="text-[10px] text-text-muted">Pilot error</div> </div> <div class="border border-danger/30 rounded-sm p-3 text-center bg-danger/[0.03]"> <div class="text-lg font-bold text-danger">1 / 4 days</div> <div class="text-[10px] text-text-muted">Fatal LOC-I accident</div> </div> </div> <a href="/about" class="block text-center text-[10px] text-blue hover:underline mt-3">Read the full story &rarr;</a> </div> </div> </div> </section>  <section class="py-10 px-4 bg-navy-mid border-t border-border"> <div class="max-w-6xl mx-auto"> <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-6"> <div> <h2 class="text-base font-semibold mb-2">Switching from another platform?</h2> <p class="text-xs text-text-muted">See exactly what changes — feature by feature, with real data.</p> </div> <div class="flex flex-wrap gap-2"> <a href="/alternative/flight-schedule-pro" class="border border-border hover:border-orange/30 text-xs text-text-muted hover:text-text-primary px-3 py-1.5 rounded-sm transition-colors">Flight Schedule Pro</a> <a href="/alternative/flight-circle" class="border border-border hover:border-orange/30 text-xs text-text-muted hover:text-text-primary px-3 py-1.5 rounded-sm transition-colors">Flight Circle</a> <a href="/alternative/logten-pro" class="border border-border hover:border-orange/30 text-xs text-text-muted hover:text-text-primary px-3 py-1.5 rounded-sm transition-colors">LogTen Pro</a> <a href="/alternative/foreflight-logbook" class="border border-border hover:border-orange/30 text-xs text-text-muted hover:text-text-primary px-3 py-1.5 rounded-sm transition-colors">ForeFlight</a> <a href="/alternative/talon-eta" class="border border-border hover:border-orange/30 text-xs text-text-muted hover:text-text-primary px-3 py-1.5 rounded-sm transition-colors">Talon ETA</a> </div> </div> <!-- Dual CTA --> <div class="mt-8 pt-6 border-t border-border flex flex-col sm:flex-row justify-center gap-3"> <a href="/logbook/interest" class="bg-orange hover:bg-orange-dark text-white text-[11px] uppercase tracking-wider font-semibold px-5 h-8 inline-flex items-center justify-center rounded-sm transition-colors">
+Join the Logbook Waitlist
+</a> <a href="/school/demo" class="border border-border hover:border-blue/40 text-text-muted hover:text-text-primary text-[11px] uppercase tracking-wider font-semibold px-5 h-8 inline-flex items-center justify-center rounded-sm transition-colors">
+Schedule a School Demo
+</a> </div> </div> </section>  </main> <footer class="bg-navy border-t border-border py-8 px-4"> <div class="max-w-6xl mx-auto"> <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-sm"> <div> <h4 class="text-[10px] uppercase tracking-wider text-text-dim mb-3 font-semibold">Products</h4> <div class="flex flex-col gap-2"> <a href="/logbook" class="text-text-muted hover:text-text-primary transition-colors text-xs">Logbook</a> <a href="/school" class="text-text-muted hover:text-text-primary transition-colors text-xs">School Management</a> <a href="/dpe" class="text-text-muted hover:text-text-primary transition-colors text-xs">DPE Portal</a> <a href="/dashtwo" class="text-text-muted hover:text-text-primary transition-colors text-xs">DashTwo AI</a> <a href="/pricing" class="text-text-muted hover:text-text-primary transition-colors text-xs">Pricing</a> </div> </div> <div> <h4 class="text-[10px] uppercase tracking-wider text-text-dim mb-3 font-semibold">Compare</h4> <div class="flex flex-col gap-2"> <a href="/alternative/flight-schedule-pro" class="text-text-muted hover:text-text-primary transition-colors text-xs">vs Flight Schedule Pro</a> <a href="/alternative/flight-circle" class="text-text-muted hover:text-text-primary transition-colors text-xs">vs Flight Circle</a> <a href="/alternative/logten-pro" class="text-text-muted hover:text-text-primary transition-colors text-xs">vs LogTen Pro</a> <a href="/compare" class="text-text-muted hover:text-text-primary transition-colors text-xs">Full Comparison</a> </div> </div> <div> <h4 class="text-[10px] uppercase tracking-wider text-text-dim mb-3 font-semibold">Get Started</h4> <div class="flex flex-col gap-2"> <a href="/logbook/interest" class="text-text-muted hover:text-text-primary transition-colors text-xs">Logbook Waitlist</a> <a href="/school/demo" class="text-text-muted hover:text-text-primary transition-colors text-xs">School Demo</a> <a href="/dpe/interest" class="text-text-muted hover:text-text-primary transition-colors text-xs">DPE Partner Program</a> <a href="/about" class="text-text-muted hover:text-text-primary transition-colors text-xs">About</a> </div> </div> <div> <h4 class="text-[10px] uppercase tracking-wider text-text-dim mb-3 font-semibold">Legal</h4> <div class="flex flex-col gap-2"> <a href="/privacy" class="text-text-muted hover:text-text-primary transition-colors text-xs">Privacy</a> <a href="/legal" class="text-text-muted hover:text-text-primary transition-colors text-xs">Terms</a> </div> </div> </div> <div class="mt-8 pt-4 border-t border-border text-center"> <p class="text-[10px] text-text-dim">&copy; 2026 TallyAero. The aviation platform that replaces three.</p> </div> </div> </footer> <div id="sticky-cta" class="fixed bottom-0 left-0 right-0 z-40 bg-navy/95 backdrop-blur-md border-t border-border py-2.5 px-4 translate-y-full transition-transform duration-200"> <div class="max-w-6xl mx-auto flex items-center justify-between gap-4"> <p class="text-xs text-text-muted hidden sm:block">Ready to see TallyAero?</p> <a href="/demo" class="bg-orange hover:bg-orange-dark text-white text-[11px] uppercase tracking-wider font-semibold px-6 h-8 inline-flex items-center rounded-sm transition-colors w-full sm:w-auto justify-center"> Request a Demo </a> </div> </div> <script>
+  (function() {
+    var bar = document.getElementById('sticky-cta');
+    var hero = document.querySelector('[data-hero]');
+    if (!hero || !bar) return;
+    var io = new IntersectionObserver(function(entries) {
+      bar.style.transform = entries[0].isIntersecting ? 'translateY(100%)' : 'translateY(0)';
+    }, { threshold: 0 });
+    io.observe(hero);
+  })();
+</script> </body></html>
